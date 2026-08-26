@@ -5,7 +5,7 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { productsQuery } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
-type Search = { product?: string };
+type Search = { product?: string | undefined };
 
 export const Route = createFileRoute("/visualize")({
   validateSearch: (search: Record<string, unknown>): Search => ({
