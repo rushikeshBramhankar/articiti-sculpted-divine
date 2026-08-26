@@ -14,6 +14,7 @@ import {
   settingsQuery,
 } from "@/lib/queries";
 import { enquiryMessage, whatsappHref } from "@/components/site/brand";
+import { notifyNewEnquiry } from "@/lib/notify.functions";
 import { cn } from "@/lib/utils";
 
 type Search = { product?: string | undefined };
@@ -101,30 +102,55 @@ function QuotePage() {
       toast.error("Please add your name and mobile number.");
       return;
     }
-    const { error } = await supabase.from("enquiries").insert({
-      product_id: product?.id ?? null,
-      full_name: form.full_name,
-      phone: form.phone,
-      whatsapp: form.whatsapp || form.phone,
-      email: form.email || null,
-      city: form.city || null,
-      state: form.state || null,
-      width_ft: preset ? null : parseFloat(width) || null,
-      height_ft: preset ? null : parseFloat(height) || null,
-      area_sqft: area || null,
-      size_preset: preset,
-      material_id: material?.id ?? null,
-      finish_id: finish?.id ?? null,
-      installation_required: installation,
-      estimated_price_min: estimate ? Math.round(estimate.min) : null,
-      estimated_price_max: estimate ? Math.round(estimate.max) : null,
-      message: form.message || null,
-    });
+    const { data: inserted, error } = await supabase
+      .from("enquiries")
+      .insert({
+        product_id: product?.id ?? null,
+        full_name: form.full_name,
+        phone: form.phone,
+        whatsapp: form.whatsapp || form.phone,
+        email: form.email || null,
+        city: form.city || null,
+        state: form.state || null,
+        width_ft: preset ? null : parseFloat(width) || null,
+        height_ft: preset ? null : parseFloat(height) || null,
+        area_sqft: area || null,
+        size_preset: preset,
+        material_id: material?.id ?? null,
+        finish_id: finish?.id ?? null,
+        installation_required: installation,
+        estimated_price_min: estimate ? Math.round(estimate.min) : null,
+        estimated_price_max: estimate ? Math.round(estimate.max) : null,
+        message: form.message || null,
+      })
+      .select("id")
+      .single();
+
     if (error) {
       toast.error("Something went wrong. Please try WhatsApp.");
       return;
     }
+
     void logEvent("enquiry_submitted", { product_id: product?.id });
+
+    if (inserted?.id) {
+      void notifyNewEnquiry({
+        data: {
+          enquiryId: inserted.id,
+          fullName: form.full_name,
+          phone: form.phone,
+          city: form.city || null,
+          product: product?.name ?? null,
+          size: area ? `${area} sq.ft` : null,
+          material: material?.name ?? null,
+          finish: finish?.name ?? null,
+          estimate: estimate ? `${formatINR(estimate.min)} – ${formatINR(estimate.max)}` : null,
+          message: form.message || null,
+          adminUrl: `${window.location.origin}/admin/enquiries/${inserted.id}`,
+        },
+      }).catch(() => {});
+    }
+
     setSubmitted(true);
   }
 
