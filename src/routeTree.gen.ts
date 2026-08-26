@@ -21,7 +21,13 @@ import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as VisualizeRouteImport } from './routes/visualize'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as AdminFinishesRouteImport } from './routes/admin.finishes'
+import { Route as AdminInstallationsRouteImport } from './routes/admin.installations'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminMaterialsRouteImport } from './routes/admin.materials'
+import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
+import { Route as AdminPricingRouteImport } from './routes/admin.pricing'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
@@ -86,9 +92,39 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/admin/categories',
+  path: '/admin/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminFinishesRoute = AdminFinishesRouteImport.update({
+  id: '/admin/finishes',
+  path: '/admin/finishes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminInstallationsRoute = AdminInstallationsRouteImport.update({
+  id: '/admin/installations',
+  path: '/admin/installations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminMaterialsRoute = AdminMaterialsRouteImport.update({
+  id: '/admin/materials',
+  path: '/admin/materials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminOrdersRoute = AdminOrdersRouteImport.update({
+  id: '/admin/orders',
+  path: '/admin/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPricingRoute = AdminPricingRouteImport.update({
+  id: '/admin/pricing',
+  path: '/admin/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
@@ -119,7 +155,13 @@ export interface FileRoutesByFullPath {
   '/quote': typeof QuoteRoute
   '/terms': typeof TermsRoute
   '/visualize': typeof VisualizeRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/finishes': typeof AdminFinishesRoute
+  '/admin/installations': typeof AdminInstallationsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/materials': typeof AdminMaterialsRoute
+  '/admin/orders': typeof AdminOrdersRoute
+  '/admin/pricing': typeof AdminPricingRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -137,7 +179,13 @@ export interface FileRoutesByTo {
   '/quote': typeof QuoteRoute
   '/terms': typeof TermsRoute
   '/visualize': typeof VisualizeRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/finishes': typeof AdminFinishesRoute
+  '/admin/installations': typeof AdminInstallationsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/materials': typeof AdminMaterialsRoute
+  '/admin/orders': typeof AdminOrdersRoute
+  '/admin/pricing': typeof AdminPricingRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -156,7 +204,13 @@ export interface FileRoutesById {
   '/quote': typeof QuoteRoute
   '/terms': typeof TermsRoute
   '/visualize': typeof VisualizeRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/finishes': typeof AdminFinishesRoute
+  '/admin/installations': typeof AdminInstallationsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/materials': typeof AdminMaterialsRoute
+  '/admin/orders': typeof AdminOrdersRoute
+  '/admin/pricing': typeof AdminPricingRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -176,7 +230,13 @@ export interface FileRouteTypes {
     | '/quote'
     | '/terms'
     | '/visualize'
+    | '/admin/categories'
+    | '/admin/finishes'
+    | '/admin/installations'
     | '/admin/login'
+    | '/admin/materials'
+    | '/admin/orders'
+    | '/admin/pricing'
     | '/collections/$slug'
     | '/products/$slug'
     | '/admin/'
@@ -194,7 +254,13 @@ export interface FileRouteTypes {
     | '/quote'
     | '/terms'
     | '/visualize'
+    | '/admin/categories'
+    | '/admin/finishes'
+    | '/admin/installations'
     | '/admin/login'
+    | '/admin/materials'
+    | '/admin/orders'
+    | '/admin/pricing'
     | '/collections/$slug'
     | '/products/$slug'
     | '/admin'
@@ -212,7 +278,13 @@ export interface FileRouteTypes {
     | '/quote'
     | '/terms'
     | '/visualize'
+    | '/admin/categories'
+    | '/admin/finishes'
+    | '/admin/installations'
     | '/admin/login'
+    | '/admin/materials'
+    | '/admin/orders'
+    | '/admin/pricing'
     | '/collections/$slug'
     | '/products/$slug'
     | '/admin/'
@@ -231,7 +303,13 @@ export interface RootRouteChildren {
   QuoteRoute: typeof QuoteRoute
   TermsRoute: typeof TermsRoute
   VisualizeRoute: typeof VisualizeRoute
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
+  AdminFinishesRoute: typeof AdminFinishesRoute
+  AdminInstallationsRoute: typeof AdminInstallationsRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  AdminMaterialsRoute: typeof AdminMaterialsRoute
+  AdminOrdersRoute: typeof AdminOrdersRoute
+  AdminPricingRoute: typeof AdminPricingRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -324,11 +402,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/admin/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/finishes': {
+      id: '/admin/finishes'
+      path: '/admin/finishes'
+      fullPath: '/admin/finishes'
+      preLoaderRoute: typeof AdminFinishesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/installations': {
+      id: '/admin/installations'
+      path: '/admin/installations'
+      fullPath: '/admin/installations'
+      preLoaderRoute: typeof AdminInstallationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/materials': {
+      id: '/admin/materials'
+      path: '/admin/materials'
+      fullPath: '/admin/materials'
+      preLoaderRoute: typeof AdminMaterialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/orders': {
+      id: '/admin/orders'
+      path: '/admin/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AdminOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/pricing': {
+      id: '/admin/pricing'
+      path: '/admin/pricing'
+      fullPath: '/admin/pricing'
+      preLoaderRoute: typeof AdminPricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collections/': {
@@ -367,7 +487,13 @@ const rootRouteChildren: RootRouteChildren = {
   QuoteRoute: QuoteRoute,
   TermsRoute: TermsRoute,
   VisualizeRoute: VisualizeRoute,
+  AdminCategoriesRoute: AdminCategoriesRoute,
+  AdminFinishesRoute: AdminFinishesRoute,
+  AdminInstallationsRoute: AdminInstallationsRoute,
   AdminLoginRoute: AdminLoginRoute,
+  AdminMaterialsRoute: AdminMaterialsRoute,
+  AdminOrdersRoute: AdminOrdersRoute,
+  AdminPricingRoute: AdminPricingRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
