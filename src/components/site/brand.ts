@@ -8,10 +8,10 @@ export function whatsappHref(
 }
 
 export function enquiryMessage(parts: {
-  product?: string;
-  size?: string;
-  material?: string;
-  finish?: string;
+  product?: string | undefined;
+  size?: string | undefined;
+  material?: string | undefined;
+  finish?: string | undefined;
 }) {
   return [
     `Hi Articiti, I'm interested in the ${parts.product ?? "wall sculpture"} wall sculpture.`,
