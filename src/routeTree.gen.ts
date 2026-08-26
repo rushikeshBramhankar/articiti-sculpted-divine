@@ -20,6 +20,8 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as VisualizeRouteImport } from './routes/visualize'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
@@ -79,6 +81,16 @@ const VisualizeRoute = VisualizeRouteImport.update({
   path: '/visualize',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
   id: '/collections/',
   path: '/collections/',
@@ -107,8 +119,10 @@ export interface FileRoutesByFullPath {
   '/quote': typeof QuoteRoute
   '/terms': typeof TermsRoute
   '/visualize': typeof VisualizeRoute
+  '/admin/login': typeof AdminLoginRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/collections/': typeof CollectionsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -123,8 +137,10 @@ export interface FileRoutesByTo {
   '/quote': typeof QuoteRoute
   '/terms': typeof TermsRoute
   '/visualize': typeof VisualizeRoute
+  '/admin/login': typeof AdminLoginRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/collections': typeof CollectionsIndexRoute
 }
 export interface FileRoutesById {
@@ -140,8 +156,10 @@ export interface FileRoutesById {
   '/quote': typeof QuoteRoute
   '/terms': typeof TermsRoute
   '/visualize': typeof VisualizeRoute
+  '/admin/login': typeof AdminLoginRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/collections/': typeof CollectionsIndexRoute
 }
 export interface FileRouteTypes {
@@ -158,8 +176,10 @@ export interface FileRouteTypes {
     | '/quote'
     | '/terms'
     | '/visualize'
+    | '/admin/login'
     | '/collections/$slug'
     | '/products/$slug'
+    | '/admin/'
     | '/collections/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -174,8 +194,10 @@ export interface FileRouteTypes {
     | '/quote'
     | '/terms'
     | '/visualize'
+    | '/admin/login'
     | '/collections/$slug'
     | '/products/$slug'
+    | '/admin'
     | '/collections'
   id:
     | '__root__'
@@ -190,8 +212,10 @@ export interface FileRouteTypes {
     | '/quote'
     | '/terms'
     | '/visualize'
+    | '/admin/login'
     | '/collections/$slug'
     | '/products/$slug'
+    | '/admin/'
     | '/collections/'
   fileRoutesById: FileRoutesById
 }
@@ -207,8 +231,10 @@ export interface RootRouteChildren {
   QuoteRoute: typeof QuoteRoute
   TermsRoute: typeof TermsRoute
   VisualizeRoute: typeof VisualizeRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
 }
 
@@ -291,6 +317,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VisualizeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/collections/': {
       id: '/collections/'
       path: '/collections'
@@ -327,8 +367,10 @@ const rootRouteChildren: RootRouteChildren = {
   QuoteRoute: QuoteRoute,
   TermsRoute: TermsRoute,
   VisualizeRoute: VisualizeRoute,
+  AdminLoginRoute: AdminLoginRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
+  AdminIndexRoute: AdminIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
 }
 export const routeTree = rootRouteImport
