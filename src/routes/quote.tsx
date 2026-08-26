@@ -16,7 +16,7 @@ import {
 import { enquiryMessage, whatsappHref } from "@/components/site/brand";
 import { cn } from "@/lib/utils";
 
-type Search = { product?: string };
+type Search = { product?: string | undefined };
 
 export const Route = createFileRoute("/quote")({
   validateSearch: (search: Record<string, unknown>): Search => ({
