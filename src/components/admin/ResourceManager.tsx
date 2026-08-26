@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Pencil, Plus, Trash2 } from "lucide-react";
@@ -48,7 +49,7 @@ export type Field = {
 export type Column = {
   key: string;
   label: string;
-  render?: (row: Row) => React.ReactNode;
+  render?: (row: Row) => ReactNode;
 };
 
 export function ResourceManager({
@@ -167,7 +168,7 @@ export function ResourceManager({
                 <TableRow key={String(row["id"])}>
                   {columns.map((c) => (
                     <TableCell key={c.key} className="align-middle">
-                      {c.render ? c.render(row) : ((row[c.key] as React.ReactNode) ?? "—")}
+                      {c.render ? c.render(row) : ((row[c.key] as ReactNode) ?? "—")}
                     </TableCell>
                   ))}
                   <TableCell className="text-right whitespace-nowrap">
