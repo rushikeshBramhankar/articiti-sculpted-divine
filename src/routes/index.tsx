@@ -5,7 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";
 import {
   categoriesQuery,
-  featuredProductsQuery,
+  productsQuery,
   installationsQuery,
   settingsQuery,
 } from "@/lib/queries";
@@ -42,7 +42,7 @@ const INTRO = [
 function Index() {
   const { data: settings } = useQuery(settingsQuery);
   const { data: categories = [] } = useQuery(categoriesQuery);
-  const { data: featured = [] } = useQuery(featuredProductsQuery);
+  const { data: collection = [] } = useQuery(productsQuery());
   const { data: installations = [] } = useQuery(installationsQuery);
 
   return (
@@ -167,20 +167,20 @@ function Index() {
         </div>
       </section>
 
-      {/* FEATURED */}
-      {featured.length > 0 && (
+      {/* COLLECTION */}
+      {collection.length > 0 && (
         <section className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32">
           <Reveal className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Featured</p>
-              <h2 className="font-display mt-4 text-3xl sm:text-5xl">Signature Installations.</h2>
+              <p className="eyebrow">Collection</p>
+              <h2 className="font-display mt-4 text-3xl sm:text-5xl">Our Collection.</h2>
             </div>
             <Link to="/explore" className="text-xs tracking-[0.18em] text-accent uppercase">
               View all designs →
             </Link>
           </Reveal>
           <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.slice(0, 6).map((p, i) => (
+            {collection.slice(0, 8).map((p, i) => (
               <Reveal key={p.id} delay={i * 80}>
                 <ProductCard product={p} />
               </Reveal>

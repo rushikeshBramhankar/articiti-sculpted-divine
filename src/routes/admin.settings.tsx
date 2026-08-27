@@ -101,23 +101,23 @@ function SettingsPage() {
           <h2 className="font-semibold text-lg">Brand Information</h2>
           <div className="space-y-3">
             <div>
-              <Label>{LABELS.brand_name}</Label>
+              <Label>{LABELS["brand_name"]}</Label>
               <Input
-                value={values.brand_name || ""}
+                value={values["brand_name"] || ""}
                 onChange={(e) => handleChange("brand_name", e.target.value)}
               />
             </div>
             <div>
-              <Label>{LABELS.tagline}</Label>
+              <Label>{LABELS["tagline"]}</Label>
               <Input
-                value={values.tagline || ""}
+                value={values["tagline"] || ""}
                 onChange={(e) => handleChange("tagline", e.target.value)}
               />
             </div>
             <div>
-              <Label>{LABELS.supporting_line}</Label>
+              <Label>{LABELS["supporting_line"]}</Label>
               <Textarea
-                value={values.supporting_line || ""}
+                value={values["supporting_line"] || ""}
                 onChange={(e) => handleChange("supporting_line", e.target.value)}
                 rows={2}
               />
@@ -130,24 +130,24 @@ function SettingsPage() {
           <h2 className="font-semibold text-lg">Contact Information</h2>
           <div className="space-y-3">
             <div>
-              <Label>{LABELS.whatsapp_number}</Label>
+              <Label>{LABELS["whatsapp_number"]}</Label>
               <Input
-                value={values.whatsapp_number || ""}
+                value={values["whatsapp_number"] || ""}
                 onChange={(e) => handleChange("whatsapp_number", e.target.value)}
               />
             </div>
             <div>
-              <Label>{LABELS.contact_email}</Label>
+              <Label>{LABELS["contact_email"]}</Label>
               <Input
                 type="email"
-                value={values.contact_email || ""}
+                value={values["contact_email"] || ""}
                 onChange={(e) => handleChange("contact_email", e.target.value)}
               />
             </div>
             <div>
-              <Label>{LABELS.instagram_url}</Label>
+              <Label>{LABELS["instagram_url"]}</Label>
               <Input
-                value={values.instagram_url || ""}
+                value={values["instagram_url"] || ""}
                 onChange={(e) => handleChange("instagram_url", e.target.value)}
               />
             </div>
@@ -159,31 +159,31 @@ function SettingsPage() {
           <h2 className="font-semibold text-lg">Hero Section</h2>
           <div className="space-y-3">
             <div>
-              <Label>{LABELS.hero_heading}</Label>
+              <Label>{LABELS["hero_heading"]}</Label>
               <Input
-                value={values.hero_heading || ""}
+                value={values["hero_heading"] || ""}
                 onChange={(e) => handleChange("hero_heading", e.target.value)}
               />
             </div>
             <div>
-              <Label>{LABELS.hero_subheading}</Label>
+              <Label>{LABELS["hero_subheading"]}</Label>
               <Textarea
-                value={values.hero_subheading || ""}
+                value={values["hero_subheading"] || ""}
                 onChange={(e) => handleChange("hero_subheading", e.target.value)}
                 rows={2}
               />
             </div>
             <div>
-              <Label>{LABELS.hero_note}</Label>
+              <Label>{LABELS["hero_note"]}</Label>
               <Input
-                value={values.hero_note || ""}
+                value={values["hero_note"] || ""}
                 onChange={(e) => handleChange("hero_note", e.target.value)}
               />
             </div>
             <div>
               <ImageInput
-                label={LABELS.hero_image_url}
-                value={values.hero_image_url || ""}
+                label={LABELS["hero_image_url"] ?? ""}
+                value={values["hero_image_url"] || ""}
                 onChange={(url) => handleChange("hero_image_url", url)}
                 folder="settings"
               />
@@ -195,9 +195,9 @@ function SettingsPage() {
         <Card className="p-6 space-y-4">
           <h2 className="font-semibold text-lg">Footer</h2>
           <div>
-            <Label>{LABELS.footer_text}</Label>
+            <Label>{LABELS["footer_text"]}</Label>
             <Textarea
-              value={values.footer_text || ""}
+              value={values["footer_text"] || ""}
               onChange={(e) => handleChange("footer_text", e.target.value)}
               rows={3}
             />

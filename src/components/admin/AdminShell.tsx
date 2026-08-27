@@ -18,6 +18,7 @@ import {
   ShoppingBag,
   Users,
 } from "lucide-react";
+import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { db, useAdminSession } from "@/lib/admin";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -183,6 +184,7 @@ export function AdminShell({
 
         <main className="min-w-0 flex-1 p-4 md:p-6">{children}</main>
       </div>
+      <Toaster position="bottom-right" />
     </div>
   );
 }
