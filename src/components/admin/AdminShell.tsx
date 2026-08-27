@@ -18,6 +18,7 @@ import {
   ShoppingBag,
   Users,
 } from "lucide-react";
+import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { db, useAdminSession } from "@/lib/admin";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";

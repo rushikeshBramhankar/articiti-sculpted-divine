@@ -60,7 +60,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
     slug: "",
     short_description: "",
     long_description: "",
-    starting_price: null,
+    starting_price: 15000,
     pricing_mode: "per_sqft",
     main_image_url: "",
     side_view_url: "",
@@ -276,7 +276,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label>Starting Price (₹)</Label>
+            <Label>Starting Price (₹) *</Label>
             <Input
               type="number"
               value={form.starting_price ?? ""}
@@ -472,15 +472,15 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
           Cancel
         </Button>
         <Button
-          onClick={() => saveMutation.mutate("draft")}
-          disabled={saveMutation.isPending || !form.name || !form.category_id}
+          onClick={() => handleSave("draft")}
+          disabled={saveMutation.isPending}
           className="flex-1"
         >
           Save Draft
         </Button>
         <Button
-          onClick={() => saveMutation.mutate("published")}
-          disabled={saveMutation.isPending || !form.name || !form.category_id}
+          onClick={() => handleSave("published")}
+          disabled={saveMutation.isPending}
           className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90"
         >
           Publish
@@ -488,4 +488,21 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
       </div>
     </div>
   );
+
+  function handleSave(status: "draft" | "published") {
+    const name = form.name.trim();
+    if (!name) {
+      toast.error("Product Name is required.");
+      return;
+    }
+    if (!form.category_id) {
+      toast.error("Please select a Category.");
+      return;
+    }
+    if (form.starting_price == null || form.starting_price <= 0 || Number.isNaN(form.starting_price)) {
+      toast.error("Starting Price must be a positive number.");
+      return;
+    }
+    saveMutation.mutate(status);
+  }
 }
