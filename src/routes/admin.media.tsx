@@ -40,7 +40,9 @@ function MediaPage() {
     queryFn: async () => {
       const res = await db.from("media").select("id,url,source_type,title,product_id").order("created_at", { ascending: false });
       if (res.error) throw new Error(res.error.message);
-      return res.data as MediaItem[];
+      return ((res.data ?? []) as unknown as { id: string; url: string; source_type: "ai_visualization" | "real_installation"; title?: string; product_id?: string }[]).map(
+        (m) => ({ id: m.id, url: m.url, type: m.source_type, title: m.title, product_id: m.product_id })
+      ) as MediaItem[];
     },
   });
 

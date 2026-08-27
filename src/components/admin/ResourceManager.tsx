@@ -80,7 +80,7 @@ export function ResourceManager({
     queryFn: async () => {
       const res = await db.from(table).select(select).order(orderBy, { ascending });
       if (res.error) throw new Error(res.error.message);
-      return (res.data ?? []) as Row[];
+      return ((res.data ?? []) as unknown) as Row[];
     },
   });
 
