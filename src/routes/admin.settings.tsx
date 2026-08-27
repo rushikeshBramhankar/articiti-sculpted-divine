@@ -182,7 +182,7 @@ function SettingsPage() {
             </div>
             <div>
               <ImageInput
-                label={LABELS["hero_image_url"]}
+                label={LABELS["hero_image_url"] ?? ""}
                 value={values["hero_image_url"] || ""}
                 onChange={(url) => handleChange("hero_image_url", url)}
                 folder="settings"
