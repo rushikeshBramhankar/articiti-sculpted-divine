@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 import { formatINR } from "@/lib/pricing";
 import { logEvent, productImagesQuery, productQuery, settingsQuery } from "@/lib/queries";
 import { enquiryMessage, whatsappHref } from "@/components/site/brand";
@@ -44,7 +45,27 @@ function ProductPage() {
   if (isLoading) {
     return (
       <SiteShell>
-        <div className="min-h-[60svh] px-5 pt-40 text-muted-foreground md:px-10">Loading…</div>
+        <section className="mx-auto grid max-w-7xl gap-10 px-5 pt-28 md:grid-cols-[1.15fr_1fr] md:px-10 md:pt-40">
+          <Skeleton className="aspect-[4/5] w-full" />
+          <div className="md:pt-6">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="mt-6 h-12 w-3/4" />
+            <Skeleton className="mt-3 h-3 w-48" />
+            <Skeleton className="mt-8 h-10 w-56" />
+            <Skeleton className="mt-2 h-4 w-full max-w-md" />
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Skeleton className="h-12 w-40" />
+              <Skeleton className="h-12 w-48" />
+              <Skeleton className="h-12 w-36" />
+            </div>
+            <div className="mt-12 border-t border-border pt-8">
+              <Skeleton className="h-3 w-28" />
+              <Skeleton className="mt-4 h-4 w-full" />
+              <Skeleton className="mt-2 h-4 w-5/6" />
+              <Skeleton className="mt-2 h-4 w-4/6" />
+            </div>
+          </div>
+        </section>
       </SiteShell>
     );
   }
@@ -73,9 +94,6 @@ function ProductPage() {
             alt={`${product.name} 3D wall sculpture`}
             className="w-full object-cover"
           />
-          <span className="absolute top-4 left-4 bg-ink/70 px-2.5 py-1 text-[0.55rem] tracking-[0.18em] text-ink-foreground uppercase">
-            AI Visualization
-          </span>
         </div>
 
         <div className="md:pt-6">
@@ -152,9 +170,11 @@ function ProductPage() {
                 loading="lazy"
                 className="aspect-3/4 w-full object-cover"
               />
-              <span className="absolute top-3 left-3 bg-ink/70 px-2 py-1 text-[0.52rem] tracking-[0.16em] text-ink-foreground uppercase">
-                {img.source_type === "real_installation" ? "Actual Installation" : "AI Visualization"}
-              </span>
+              {img.source_type === "real_installation" && (
+                <span className="absolute top-3 left-3 bg-ink/70 px-2 py-1 text-[0.52rem] tracking-[0.16em] text-ink-foreground uppercase">
+                  Actual Installation
+                </span>
+              )}
               <span className="mt-3 block text-left text-xs tracking-[0.14em] text-muted-foreground uppercase">
                 {img.caption}
               </span>

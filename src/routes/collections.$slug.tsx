@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Skeleton } from "@/components/ui/skeleton";
 import { categoryQuery, productsQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/collections/$slug")({
@@ -64,13 +65,25 @@ function CollectionPage() {
 
       <section className="mx-auto max-w-7xl px-5 py-20 md:px-10 md:py-28">
         <p className="eyebrow">Choose a Design</p>
-        <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((p, i) => (
-            <Reveal key={p.id} delay={(i % 3) * 80}>
-              <ProductCard product={p} />
-            </Reveal>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i}>
+                <Skeleton className="aspect-4/5 w-full" />
+                <Skeleton className="mt-5 h-5 w-3/4" />
+                <Skeleton className="mt-2 h-4 w-full" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {products.map((p, i) => (
+              <Reveal key={p.id} delay={(i % 3) * 80}>
+                <ProductCard product={p} />
+              </Reveal>
+            ))}
+          </div>
+        )}
         {!isLoading && products.length === 0 && (
           <p className="text-muted-foreground">New designs for this collection are coming soon.</p>
         )}
