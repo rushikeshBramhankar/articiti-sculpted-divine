@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Skeleton } from "@/components/ui/skeleton";
 import { categoriesQuery, productsQuery } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
@@ -27,9 +28,10 @@ export const Route = createFileRoute("/explore")({
 });
 
 function ExplorePage() {
-  const { data: categories = [] } = useQuery(categoriesQuery);
-  const { data: products = [] } = useQuery(productsQuery());
+  const { data: categories = [], isLoading: isLoadingCategories } = useQuery(categoriesQuery);
+  const { data: products = [], isLoading: isLoadingProducts } = useQuery(productsQuery());
   const [active, setActive] = useState<string | null>(null);
+  const isLoading = isLoadingCategories || isLoadingProducts;
 
   const list = active ? products.filter((p) => p.category_id === active) : products;
 
@@ -70,13 +72,25 @@ function ExplorePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-5 pb-28 md:px-10">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((p, i) => (
-            <Reveal key={p.id} delay={(i % 3) * 80}>
-              <ProductCard product={p} />
-            </Reveal>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i}>
+                <Skeleton className="aspect-4/5 w-full" />
+                <Skeleton className="mt-5 h-5 w-3/4" />
+                <Skeleton className="mt-2 h-4 w-full" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {list.map((p, i) => (
+              <Reveal key={p.id} delay={(i % 3) * 80}>
+                <ProductCard product={p} />
+              </Reveal>
+            ))}
+          </div>
+        )}
       </section>
     </SiteShell>
   );

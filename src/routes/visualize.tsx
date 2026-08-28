@@ -114,9 +114,6 @@ function VisualizePage() {
                 Upload a wall photo to preview your design.
               </div>
             )}
-            <span className="absolute top-3 left-3 bg-accent px-2 py-1 text-[0.55rem] tracking-[0.18em] text-accent-foreground uppercase">
-              AI Visualization
-            </span>
           </div>
 
           <p className="mt-5 text-xs text-muted-foreground">

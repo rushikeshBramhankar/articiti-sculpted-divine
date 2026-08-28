@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Skeleton } from "@/components/ui/skeleton";
 import { productsQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
@@ -26,7 +27,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { data: products = [] } = useQuery(productsQuery());
+  const { data: products = [], isLoading } = useQuery(productsQuery());
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
@@ -68,7 +69,17 @@ function Index() {
           </Link>
         </div>
 
-        {filtered.length === 0 ? (
+        {isLoading ? (
+          <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i}>
+                <Skeleton className="aspect-4/5 w-full" />
+                <Skeleton className="mt-5 h-5 w-3/4" />
+                <Skeleton className="mt-2 h-4 w-full" />
+              </div>
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
           <p className="mt-14 text-muted-foreground">
             {search ? `No products found for "${search}".` : "No products published yet."}
           </p>
