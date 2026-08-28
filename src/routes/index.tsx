@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Search } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { productsQuery } from "@/lib/queries";
@@ -27,57 +27,55 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { data: products = [] } = useQuery(productsQuery());
-  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [search, setSearch] = useState("");
 
-  function scrollByAmount(dir: 1 | -1) {
-    scrollerRef.current?.scrollBy({ left: dir * 360, behavior: "smooth" });
-  }
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return products;
+    return products.filter((p) => p.name.toLowerCase().includes(q));
+  }, [products, search]);
 
   return (
     <SiteShell>
       <section className="mx-auto max-w-7xl px-5 py-20 md:px-10 md:py-28">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow">Our Collection</p>
             <h1 className="font-display mt-4 text-3xl sm:text-5xl">All Time Best Seller</h1>
           </div>
-          <div className="flex items-center gap-3">
-            <Link
-              to="/explore"
-              className="bg-accent px-6 py-3 text-[0.65rem] tracking-[0.2em] text-accent-foreground uppercase transition-opacity hover:opacity-90"
-            >
-              View All
-            </Link>
-            <button
-              type="button"
-              aria-label="Scroll left"
-              onClick={() => scrollByAmount(-1)}
-              className="hidden size-11 items-center justify-center border border-foreground/20 text-foreground transition-colors hover:border-accent hover:text-accent sm:flex"
-            >
-              <ChevronLeft className="size-5" />
-            </button>
-            <button
-              type="button"
-              aria-label="Scroll right"
-              onClick={() => scrollByAmount(1)}
-              className="hidden size-11 items-center justify-center border border-foreground/20 text-foreground transition-colors hover:border-accent hover:text-accent sm:flex"
-            >
-              <ChevronRight className="size-5" />
-            </button>
+          <div className="flex w-full items-center gap-3 sm:w-80">
+            <div className="relative w-full">
+              <Search className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search products by name…"
+                className="w-full border border-foreground/20 bg-background py-3 pr-4 pl-11 text-sm outline-none transition-colors focus:border-accent"
+              />
+            </div>
           </div>
         </div>
 
-        {products.length === 0 ? (
-          <p className="mt-14 text-muted-foreground">No products published yet.</p>
+        <div className="mt-4 flex items-center justify-between">
+          <p className="text-xs tracking-[0.14em] text-muted-foreground uppercase">
+            {search
+              ? `${filtered.length} result${filtered.length === 1 ? "" : "s"} for "${search}"`
+              : ""}
+          </p>
+          <Link to="/explore" className="text-xs tracking-[0.18em] text-accent uppercase">
+            View All →
+          </Link>
+        </div>
+
+        {filtered.length === 0 ? (
+          <p className="mt-14 text-muted-foreground">
+            {search ? `No products found for "${search}".` : "No products published yet."}
+          </p>
         ) : (
-          <div
-            ref={scrollerRef}
-            className="mt-14 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {products.map((p) => (
-              <div key={p.id} className="w-[78vw] shrink-0 snap-start sm:w-[320px]">
-                <ProductCard product={p} />
-              </div>
+          <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+            {filtered.map((p) => (
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
         )}
