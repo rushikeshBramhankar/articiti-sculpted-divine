@@ -697,6 +697,7 @@ export type Database = {
           ai_visualization_url: string | null
           category_id: string | null
           closeup_url: string | null
+          compare_at_price: number | null
           created_at: string
           display_order: number
           id: string
@@ -720,6 +721,7 @@ export type Database = {
           ai_visualization_url?: string | null
           category_id?: string | null
           closeup_url?: string | null
+          compare_at_price?: number | null
           created_at?: string
           display_order?: number
           id?: string
@@ -743,6 +745,7 @@ export type Database = {
           ai_visualization_url?: string | null
           category_id?: string | null
           closeup_url?: string | null
+          compare_at_price?: number | null
           created_at?: string
           display_order?: number
           id?: string

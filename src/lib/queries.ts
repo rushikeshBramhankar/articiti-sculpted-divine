@@ -19,6 +19,7 @@ export type Product = {
   short_description: string | null;
   long_description: string | null;
   starting_price: number;
+  compare_at_price: number | null;
   pricing_mode: string;
   main_image_url: string | null;
   side_view_url: string | null;
@@ -123,7 +124,7 @@ export const categoriesQuery = queryOptions({
 });
 
 const PRODUCT_FIELDS =
-  "id,category_id,name,slug,short_description,long_description,starting_price,pricing_mode,main_image_url,side_view_url,closeup_url,installation_image_url,ai_visualization_url,suitable_for,is_featured,display_order";
+  "id,category_id,name,slug,short_description,long_description,starting_price,compare_at_price,pricing_mode,main_image_url,side_view_url,closeup_url,installation_image_url,ai_visualization_url,suitable_for,is_featured,display_order";
 
 export const productsQuery = (categoryId?: string) =>
   queryOptions({
