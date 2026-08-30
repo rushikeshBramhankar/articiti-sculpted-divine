@@ -19,6 +19,7 @@ import {
   Users,
 } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
+import { Logo } from "@/components/site/Logo";
 import { supabase } from "@/integrations/supabase/client";
 import { db, useAdminSession } from "@/lib/admin";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
