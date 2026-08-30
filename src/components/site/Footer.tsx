@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Instagram, MessageCircle } from "lucide-react";
 import { settingsQuery } from "@/lib/queries";
+import { Logo } from "@/components/site/Logo";
 import { whatsappHref } from "./brand";
 
 export function Footer() {
@@ -13,9 +14,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-5 py-16 md:px-10 md:py-24">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <p className="font-display text-2xl tracking-[0.36em]">
-              {settings?.["brand_name"] ?? "ARTINCITY"}
-            </p>
+            <Logo className="text-2xl" />
             <p className="font-display mt-4 max-w-xs text-xl leading-snug text-ink-foreground/70">
               {settings?.["footer_text"] ?? "Divinity, Sculpted for Your Space."}
             </p>

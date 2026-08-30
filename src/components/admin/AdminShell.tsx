@@ -19,6 +19,7 @@ import {
   Users,
 } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
+import { Logo } from "@/components/site/Logo";
 import { supabase } from "@/integrations/supabase/client";
 import { db, useAdminSession } from "@/lib/admin";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -126,8 +127,8 @@ export function AdminShell({
   return (
     <div className="bg-muted/30 flex min-h-screen">
       <aside className="bg-sidebar hidden w-64 shrink-0 flex-col border-r border-sidebar-border py-6 lg:flex">
-        <p className="font-display text-sidebar-foreground px-6 pb-6 text-lg tracking-[0.3em]">
-          ARTINCITY
+        <p className="text-sidebar-foreground px-6 pb-6">
+          <Logo className="text-lg" />
         </p>
         <NavList />
       </aside>
@@ -139,8 +140,8 @@ export function AdminShell({
               <Menu className="size-5" />
             </SheetTrigger>
             <SheetContent side="left" className="bg-sidebar w-72 p-0">
-              <SheetTitle className="font-display text-sidebar-foreground px-6 pt-6 pb-4 text-lg tracking-[0.3em]">
-                ARTINCITY
+              <SheetTitle className="text-sidebar-foreground px-6 pt-6 pb-4">
+                <Logo className="text-lg" />
               </SheetTitle>
               <NavList onNavigate={() => setOpen(false)} />
             </SheetContent>
