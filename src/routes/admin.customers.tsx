@@ -21,7 +21,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-export const Route = createFileRoute("/admin/customers")({ ssr: false, head: () => ({ meta: [{ title: "Customers — ARTICITI Admin" }, { name: "robots", content: "noindex" }] }), component: CustomersPage });
+export const Route = createFileRoute("/admin/customers")({ ssr: false, head: () => ({ meta: [{ title: "Customers — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: CustomersPage });
 
 interface CustomerWithStats {
   id: string;

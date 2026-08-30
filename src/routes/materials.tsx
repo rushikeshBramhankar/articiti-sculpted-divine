@@ -8,13 +8,13 @@ import { formatINR } from "@/lib/pricing";
 export const Route = createFileRoute("/materials")({
   head: () => ({
     meta: [
-      { title: "Materials — Choose What Works For Your Space | ARTICITI" },
+      { title: "Materials — Choose What Works For Your Space | ARTINCITY" },
       {
         name: "description",
         content:
           "HDHMR, Gypsum/POP, MDF and fibre options for custom devotional wall sculptures — with guidance on what suits your design and space.",
       },
-      { property: "og:title", content: "Materials — ARTICITI" },
+      { property: "og:title", content: "Materials — ARTINCITY" },
       {
         property: "og:description",
         content: "Material options for custom devotional wall sculptures.",

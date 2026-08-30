@@ -25,13 +25,13 @@ export const Route = createFileRoute("/quote")({
   }),
   head: () => ({
     meta: [
-      { title: "Get a Quotation — ARTICITI Custom Devotional Wall Art" },
+      { title: "Get a Quotation — ARTINCITY Custom Devotional Wall Art" },
       {
         name: "description",
         content:
-          "Enter your wall size, choose a material and finish, and get an estimated price range for your custom ARTICITI wall sculpture.",
+          "Enter your wall size, choose a material and finish, and get an estimated price range for your custom ARTINCITY wall sculpture.",
       },
-      { property: "og:title", content: "Get a Quotation — ARTICITI" },
+      { property: "og:title", content: "Get a Quotation — ARTINCITY" },
       {
         property: "og:description",
         content: "Estimate your custom devotional wall sculpture in a few steps.",
@@ -384,7 +384,7 @@ function QuotePage() {
                 </div>
                 <div>
                   <dt className="eyebrow">Material</dt>
-                  <dd className="mt-1">{material?.name ?? "Recommended by Articiti"}</dd>
+                  <dd className="mt-1">{material?.name ?? "Recommended by ArtInCity"}</dd>
                 </div>
                 <div>
                   <dt className="eyebrow">Finish</dt>

@@ -19,7 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useRef } from "react";
 
-export const Route = createFileRoute("/admin/media")({ ssr: false, head: () => ({ meta: [{ title: "Media — ARTICITI Admin" }, { name: "robots", content: "noindex" }] }), component: MediaPage });
+export const Route = createFileRoute("/admin/media")({ ssr: false, head: () => ({ meta: [{ title: "Media — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: MediaPage });
 
 interface MediaItem {
   id: string;

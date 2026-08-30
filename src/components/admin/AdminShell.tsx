@@ -105,7 +105,7 @@ export function AdminShell({
   if (!session.userId || !session.isAdmin) {
     return (
       <div className="bg-background flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
-        <p className="font-display text-2xl tracking-[0.3em]">ARTICITI</p>
+        <p className="font-display text-2xl tracking-[0.3em]">ARTINCITY</p>
         <p className="text-muted-foreground max-w-sm text-sm">
           {session.userId
             ? "This account does not have admin access."
@@ -127,7 +127,7 @@ export function AdminShell({
     <div className="bg-muted/30 flex min-h-screen">
       <aside className="bg-sidebar hidden w-64 shrink-0 flex-col border-r border-sidebar-border py-6 lg:flex">
         <p className="font-display text-sidebar-foreground px-6 pb-6 text-lg tracking-[0.3em]">
-          ARTICITI
+          ARTINCITY
         </p>
         <NavList />
       </aside>
@@ -140,7 +140,7 @@ export function AdminShell({
             </SheetTrigger>
             <SheetContent side="left" className="bg-sidebar w-72 p-0">
               <SheetTitle className="font-display text-sidebar-foreground px-6 pt-6 pb-4 text-lg tracking-[0.3em]">
-                ARTICITI
+                ARTINCITY
               </SheetTitle>
               <NavList onNavigate={() => setOpen(false)} />
             </SheetContent>
@@ -148,7 +148,7 @@ export function AdminShell({
 
           <div className="min-w-0 flex-1">
             <p className="text-muted-foreground text-[0.62rem] tracking-[0.3em] uppercase">
-              ARTICITI Admin
+              ARTINCITY Admin
             </p>
             <h1 className="truncate text-base font-medium">{title}</h1>
           </div>

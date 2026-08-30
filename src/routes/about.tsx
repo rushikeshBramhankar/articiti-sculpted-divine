@@ -5,13 +5,13 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About ARTICITI — Indian Devotion Meets Contemporary Design" },
+      { title: "About ARTINCITY — Indian Devotion Meets Contemporary Design" },
       {
         name: "description",
         content:
-          "ARTICITI creates custom devotional wall art inspired by India's spiritual and artistic traditions, reinterpreted for contemporary interiors.",
+          "ARTINCITY creates custom devotional wall art inspired by India's spiritual and artistic traditions, reinterpreted for contemporary interiors.",
       },
-      { property: "og:title", content: "About ARTICITI" },
+      { property: "og:title", content: "About ARTINCITY" },
       {
         property: "og:description",
         content: "Where Indian devotion meets contemporary design.",
@@ -40,7 +40,7 @@ function AboutPage() {
           Where Indian Devotion Meets Contemporary Design.
         </h1>
         <p className="mt-8 max-w-xl text-muted-foreground">
-          Articiti creates custom devotional wall art inspired by India's timeless spiritual and
+          ArtInCity creates custom devotional wall art inspired by India's timeless spiritual and
           artistic traditions, reinterpreted for contemporary interiors.
         </p>
       </section>

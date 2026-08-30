@@ -12,13 +12,13 @@ import { enquiryMessage, whatsappHref } from "@/components/site/brand";
 export const Route = createFileRoute("/products/$slug")({
   head: ({ params }) => {
     const name = params.slug.replace(/-/g, " ");
-    const title = `${name} — Custom 3D Devotional Wall Sculpture | ARTICITI`;
+    const title = `${name} — Custom 3D Devotional Wall Sculpture | ARTINCITY`;
     return {
       meta: [
         { title },
         {
           name: "description",
-          content: `${name}: a contemporary 3D devotional wall sculpture by ARTICITI, made to your wall size, material and finish.`,
+          content: `${name}: a contemporary 3D devotional wall sculpture by ARTINCITY, made to your wall size, material and finish.`,
         },
         { property: "og:title", content: title },
         {

@@ -6,10 +6,10 @@ export const Route = createFileRoute("/admin/categories")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Categories — ARTICITI Admin" },
+      { title: "Categories — ARTINCITY Admin" },
       { name: "description", content: "Manage deity collections shown on the website." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Categories — ARTICITI Admin" },
+      { property: "og:title", content: "Categories — ARTINCITY Admin" },
       { property: "og:description", content: "Manage deity collections shown on the website." },
     ],
   }),

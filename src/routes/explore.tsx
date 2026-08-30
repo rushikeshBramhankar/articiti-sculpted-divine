@@ -11,16 +11,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/explore")({
   head: () => ({
     meta: [
-      { title: "Explore Designs — ARTICITI Devotional Wall Sculptures" },
+      { title: "Explore Designs — ARTINCITY Devotional Wall Sculptures" },
       {
         name: "description",
         content:
-          "Browse every ARTICITI 3D devotional wall sculpture — Krishna, Mahadev, Ganpati and Hanuman designs for modern Indian homes.",
+          "Browse every ARTINCITY 3D devotional wall sculpture — Krishna, Mahadev, Ganpati and Hanuman designs for modern Indian homes.",
       },
-      { property: "og:title", content: "Explore Designs — ARTICITI" },
+      { property: "og:title", content: "Explore Designs — ARTINCITY" },
       {
         property: "og:description",
-        content: "Browse every ARTICITI 3D devotional wall sculpture design.",
+        content: "Browse every ARTINCITY 3D devotional wall sculpture design.",
       },
     ],
   }),

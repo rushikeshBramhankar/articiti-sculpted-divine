@@ -4,13 +4,13 @@ import { SiteShell } from "@/components/site/SiteShell";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — ARTICITI" },
+      { title: "Privacy Policy — ARTINCITY" },
       {
         name: "description",
-        content: "How ARTICITI collects and uses the information you share through enquiries.",
+        content: "How ARTINCITY collects and uses the information you share through enquiries.",
       },
-      { property: "og:title", content: "Privacy Policy — ARTICITI" },
-      { property: "og:description", content: "How ARTICITI handles your information." },
+      { property: "og:title", content: "Privacy Policy — ARTINCITY" },
+      { property: "og:description", content: "How ARTINCITY handles your information." },
     ],
   }),
   component: () => (

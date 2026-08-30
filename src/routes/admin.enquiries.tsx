@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export const Route = createFileRoute("/admin/enquiries")({ ssr: false, head: () => ({ meta: [{ title: "Enquiries — ARTICITI Admin" }, { name: "robots", content: "noindex" }] }), component: EnquiriesPage });
+export const Route = createFileRoute("/admin/enquiries")({ ssr: false, head: () => ({ meta: [{ title: "Enquiries — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: EnquiriesPage });
 
 interface Enquiry {
   id: string;

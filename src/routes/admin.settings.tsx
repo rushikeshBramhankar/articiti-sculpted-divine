@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 
-export const Route = createFileRoute("/admin/settings")({ ssr: false, head: () => ({ meta: [{ title: "Website Settings — ARTICITI Admin" }, { name: "robots", content: "noindex" }] }), component: SettingsPage });
+export const Route = createFileRoute("/admin/settings")({ ssr: false, head: () => ({ meta: [{ title: "Website Settings — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: SettingsPage });
 
 const SETTING_KEYS = [
   "brand_name",
