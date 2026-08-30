@@ -14,17 +14,13 @@ const NAV = [
 ] as const;
 
 export function Header() {
-  const { data: settings } = useQuery(settingsQuery);
   const [open, setOpen] = useState(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/92 backdrop-blur-md transition-all duration-700">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20 md:px-10">
-        <Link
-          to="/"
-          className="font-display text-xl tracking-[0.38em] text-foreground transition-colors md:text-2xl"
-        >
-          {settings?.["brand_name"] ?? "ARTINCITY"}
+        <Link to="/" aria-label="ArtInCity home" className="text-foreground transition-colors">
+          <Logo className="text-xl md:text-2xl" />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -55,8 +51,8 @@ export function Header() {
               <Menu className="size-5" />
             </SheetTrigger>
             <SheetContent side="right" className="w-[86vw] bg-ink text-ink-foreground sm:w-80">
-              <SheetTitle className="font-display px-6 pt-6 text-lg tracking-[0.32em] text-ink-foreground">
-                ARTINCITY
+              <SheetTitle className="px-6 pt-6 text-ink-foreground">
+                <Logo className="text-lg" />
               </SheetTitle>
               <nav className="mt-8 flex flex-col gap-1 px-6">
                 <Link
