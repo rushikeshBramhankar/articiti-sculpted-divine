@@ -10,13 +10,13 @@ import { productsQuery } from "@/lib/queries";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ARTICITI — Divinity, Sculpted for Your Space" },
+      { title: "ARTINCITY — Divinity, Sculpted for Your Space" },
       {
         name: "description",
         content:
           "Custom 3D devotional wall art and sculptural reliefs designed for modern Indian homes. Krishna, Mahadev, Ganpati and Hanuman wall installations.",
       },
-      { property: "og:title", content: "ARTICITI — Divinity, Sculpted for Your Space" },
+      { property: "og:title", content: "ARTINCITY — Divinity, Sculpted for Your Space" },
       {
         property: "og:description",
         content: "Custom 3D devotional wall art designed to transform modern Indian homes.",

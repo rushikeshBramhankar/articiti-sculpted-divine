@@ -10,11 +10,11 @@ export const Route = createFileRoute("/admin/login")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Admin Login — ARTICITI" },
-      { name: "description", content: "Secure sign-in for the ARTICITI team." },
+      { title: "Admin Login — ARTINCITY" },
+      { name: "description", content: "Secure sign-in for the ARTINCITY team." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Admin Login — ARTICITI" },
-      { property: "og:description", content: "Secure sign-in for the ARTICITI team." },
+      { property: "og:title", content: "Admin Login — ARTINCITY" },
+      { property: "og:description", content: "Secure sign-in for the ARTINCITY team." },
     ],
   }),
   component: AdminLogin,
@@ -63,8 +63,8 @@ function AdminLogin() {
         className="bg-background text-foreground w-full max-w-sm space-y-6 rounded-lg p-8 shadow-xl"
       >
         <div className="text-center">
-          <p className="font-display text-2xl tracking-[0.34em]">ARTICITI</p>
-          <h1 className="font-display mt-3 text-xl">Welcome to Articiti Admin</h1>
+          <p className="font-display text-2xl tracking-[0.34em]">ARTINCITY</p>
+          <h1 className="font-display mt-3 text-xl">Welcome to ArtInCity Admin</h1>
         </div>
 
         <div className="space-y-2">

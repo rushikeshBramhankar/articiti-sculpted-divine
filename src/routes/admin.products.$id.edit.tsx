@@ -6,7 +6,7 @@ export const Route = createFileRoute("/admin/products/$id/edit")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Edit Product — ARTICITI Admin" },
+      { title: "Edit Product — ARTINCITY Admin" },
       { name: "robots", content: "noindex" },
     ],
   }),

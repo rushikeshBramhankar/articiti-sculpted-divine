@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Mail, MessageCircle } from "lucide-react";
 
-export const Route = createFileRoute("/admin/enquiries/$id")({ ssr: false, head: () => ({ meta: [{ title: "Enquiry Detail — ARTICITI Admin" }, { name: "robots", content: "noindex" }] }), component: EnquiryDetailPage });
+export const Route = createFileRoute("/admin/enquiries/$id")({ ssr: false, head: () => ({ meta: [{ title: "Enquiry Detail — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: EnquiryDetailPage });
 
 interface EnquiryDetail {
   id: string;
@@ -235,7 +235,7 @@ function EnquiryDetailPage() {
 
           <Card className="p-5 space-y-3">
             <a
-              href={`mailto:${enquiry.email}?subject=Your ARTICITI Enquiry&body=Hi ${enquiry.full_name},%0A%0AThank you for your enquiry regarding ${enquiry.product?.name || "our products"}.%0A%0ABest regards,%0AARTICIT%0A`}
+              href={`mailto:${enquiry.email}?subject=Your ARTINCITY Enquiry&body=Hi ${enquiry.full_name},%0A%0AThank you for your enquiry regarding ${enquiry.product?.name || "our products"}.%0A%0ABest regards,%0AARTINCITY%0A`}
               className="block"
             >
               <Button variant="outline" className="w-full" size="sm">

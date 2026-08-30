@@ -7,13 +7,13 @@ import { whatsappHref } from "@/components/site/brand";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact ARTICITI — Let's Create Something Extraordinary" },
+      { title: "Contact ARTINCITY — Let's Create Something Extraordinary" },
       {
         name: "description",
         content:
-          "Talk to ARTICITI on WhatsApp or Instagram about custom devotional wall sculptures, sizes, materials and quotations.",
+          "Talk to ARTINCITY on WhatsApp or Instagram about custom devotional wall sculptures, sizes, materials and quotations.",
       },
-      { property: "og:title", content: "Contact ARTICITI" },
+      { property: "og:title", content: "Contact ARTINCITY" },
       { property: "og:description", content: "Let's create something extraordinary." },
     ],
   }),

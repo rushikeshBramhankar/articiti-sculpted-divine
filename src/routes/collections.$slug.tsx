@@ -9,18 +9,18 @@ import { categoryQuery, productsQuery } from "@/lib/queries";
 export const Route = createFileRoute("/collections/$slug")({
   head: ({ params }) => {
     const name = params.slug.replace(/-/g, " ");
-    const title = `${name} Collection — ARTICITI Devotional Wall Sculptures`;
+    const title = `${name} Collection — ARTINCITY Devotional Wall Sculptures`;
     return {
       meta: [
         { title },
         {
           name: "description",
-          content: `Explore ARTICITI ${name} 3D wall sculptures — timeless devotion interpreted through contemporary architectural art.`,
+          content: `Explore ARTINCITY ${name} 3D wall sculptures — timeless devotion interpreted through contemporary architectural art.`,
         },
         { property: "og:title", content: title },
         {
           property: "og:description",
-          content: `Explore ARTICITI ${name} devotional wall sculptures.`,
+          content: `Explore ARTINCITY ${name} devotional wall sculptures.`,
         },
       ],
     };

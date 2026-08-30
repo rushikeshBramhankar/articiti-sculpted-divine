@@ -7,13 +7,13 @@ import { installationsQuery } from "@/lib/queries";
 export const Route = createFileRoute("/installations")({
   head: () => ({
     meta: [
-      { title: "Real Installations — Made For Real Homes | ARTICITI" },
+      { title: "Real Installations — Made For Real Homes | ARTINCITY" },
       {
         name: "description",
         content:
-          "Actual ARTICITI devotional wall sculpture installations in real Indian homes — location, design, size and material.",
+          "Actual ARTINCITY devotional wall sculpture installations in real Indian homes — location, design, size and material.",
       },
-      { property: "og:title", content: "Real Installations — ARTICITI" },
+      { property: "og:title", content: "Real Installations — ARTINCITY" },
       { property: "og:description", content: "Actual installations in real Indian homes." },
     ],
   }),

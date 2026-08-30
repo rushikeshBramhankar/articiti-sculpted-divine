@@ -14,7 +14,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <p className="font-display text-2xl tracking-[0.36em]">
-              {settings?.["brand_name"] ?? "ARTICITI"}
+              {settings?.["brand_name"] ?? "ARTINCITY"}
             </p>
             <p className="font-display mt-4 max-w-xs text-xl leading-snug text-ink-foreground/70">
               {settings?.["footer_text"] ?? "Divinity, Sculpted for Your Space."}
@@ -84,7 +84,7 @@ export function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-sidebar-border pt-8 text-xs text-ink-foreground/50 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} ARTICITI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} ARTINCITY. All rights reserved.</p>
           <p className="flex gap-6">
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms &amp; Conditions</Link>

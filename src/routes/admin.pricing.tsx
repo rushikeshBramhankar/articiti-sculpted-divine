@@ -8,10 +8,10 @@ export const Route = createFileRoute("/admin/pricing")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Pricing Rules — ARTICITI Admin" },
+      { title: "Pricing Rules — ARTINCITY Admin" },
       { name: "description", content: "Configure the engine behind public price estimates." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Pricing Rules — ARTICITI Admin" },
+      { property: "og:title", content: "Pricing Rules — ARTINCITY Admin" },
       {
         property: "og:description",
         content: "Configure the engine behind public price estimates.",

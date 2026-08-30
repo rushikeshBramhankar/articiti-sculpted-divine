@@ -29,10 +29,10 @@ export const Route = createFileRoute("/admin/products/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Products — ARTICITI Admin" },
+      { title: "Products — ARTINCITY Admin" },
       { name: "description", content: "Manage all devotional wall sculpture products." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Products — ARTICITI Admin" },
+      { property: "og:title", content: "Products — ARTINCITY Admin" },
       { property: "og:description", content: "Manage all devotional wall sculpture products." },
     ],
   }),

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Menu } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { settingsQuery } from "@/lib/queries";
 import { cn } from "@/lib/utils";
@@ -17,32 +17,16 @@ const NAV = [
 
 export function Header() {
   const { data: settings } = useQuery(settingsQuery);
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-700",
-        scrolled ? "bg-background/92 border-b border-border backdrop-blur-md" : "bg-transparent",
-      )}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/92 backdrop-blur-md transition-all duration-700">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20 md:px-10">
         <Link
           to="/"
-          className={cn(
-            "font-display text-xl tracking-[0.38em] transition-colors md:text-2xl",
-            scrolled ? "text-foreground" : "text-ink-foreground",
-          )}
+          className="font-display text-xl tracking-[0.38em] text-foreground transition-colors md:text-2xl"
         >
-          {settings?.["brand_name"] ?? "ARTICITI"}
+          {settings?.["brand_name"] ?? "ARTINCITY"}
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -50,12 +34,7 @@ export function Header() {
             <Link
               key={item.to}
               to={item.to}
-              className={cn(
-                "text-[0.72rem] tracking-[0.18em] uppercase transition-colors",
-                scrolled
-                  ? "text-muted-foreground hover:text-accent"
-                  : "text-ink-foreground/80 hover:text-accent",
-              )}
+              className="text-[0.72rem] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-accent"
               activeProps={{ className: "text-accent" }}
             >
               {item.label}
@@ -73,13 +52,13 @@ export function Header() {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
               aria-label="Open menu"
-              className={cn("p-2 lg:hidden", scrolled ? "text-foreground" : "text-ink-foreground")}
+              className="p-2 text-foreground lg:hidden"
             >
               <Menu className="size-5" />
             </SheetTrigger>
             <SheetContent side="right" className="w-[86vw] bg-ink text-ink-foreground sm:w-80">
               <SheetTitle className="font-display px-6 pt-6 text-lg tracking-[0.32em] text-ink-foreground">
-                ARTICITI
+                ARTINCITY
               </SheetTitle>
               <nav className="mt-8 flex flex-col gap-1 px-6">
                 <Link

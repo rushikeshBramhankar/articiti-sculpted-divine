@@ -5,13 +5,13 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/how-it-works")({
   head: () => ({
     meta: [
-      { title: "How It Works — From Vision to Installation | ARTICITI" },
+      { title: "How It Works — From Vision to Installation | ARTINCITY" },
       {
         name: "description",
         content:
           "Six steps from choosing a devotional wall design to installation in your home — visualize, size, material, finish, quotation, installation.",
       },
-      { property: "og:title", content: "How It Works — ARTICITI" },
+      { property: "og:title", content: "How It Works — ARTINCITY" },
       {
         property: "og:description",
         content: "From vision to installation in six considered steps.",

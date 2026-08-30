@@ -8,13 +8,13 @@ import { categoriesQuery } from "@/lib/queries";
 export const Route = createFileRoute("/collections/")({
   head: () => ({
     meta: [
-      { title: "Collections — Krishna, Mahadev, Ganpati & Hanuman Wall Art | ARTICITI" },
+      { title: "Collections — Krishna, Mahadev, Ganpati & Hanuman Wall Art | ARTINCITY" },
       {
         name: "description",
         content:
-          "Explore ARTICITI collections of devotional wall sculptures by deity — Shri Krishna, Mahadev, Ganpati Bappa and Bajrang Bali.",
+          "Explore ARTINCITY collections of devotional wall sculptures by deity — Shri Krishna, Mahadev, Ganpati Bappa and Bajrang Bali.",
       },
-      { property: "og:title", content: "Collections — ARTICITI" },
+      { property: "og:title", content: "Collections — ARTINCITY" },
       {
         property: "og:description",
         content: "Devotional wall sculpture collections by deity.",

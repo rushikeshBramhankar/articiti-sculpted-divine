@@ -13,16 +13,16 @@ export const Route = createFileRoute("/visualize")({
   }),
   head: () => ({
     meta: [
-      { title: "Visualize Your Wall — ARTICITI" },
+      { title: "Visualize Your Wall — ARTINCITY" },
       {
         name: "description",
         content:
-          "Upload a photo of your wall and preview how an ARTICITI devotional wall sculpture will look in your home.",
+          "Upload a photo of your wall and preview how an ARTINCITY devotional wall sculpture will look in your home.",
       },
-      { property: "og:title", content: "Visualize Your Wall — ARTICITI" },
+      { property: "og:title", content: "Visualize Your Wall — ARTINCITY" },
       {
         property: "og:description",
-        content: "See an ARTICITI wall sculpture on your own wall before you order.",
+        content: "See an ARTINCITY wall sculpture on your own wall before you order.",
       },
     ],
   }),

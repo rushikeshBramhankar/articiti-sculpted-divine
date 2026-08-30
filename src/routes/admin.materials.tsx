@@ -7,10 +7,10 @@ export const Route = createFileRoute("/admin/materials")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Materials — ARTICITI Admin" },
+      { title: "Materials — ARTINCITY Admin" },
       { name: "description", content: "Manage materials and their base rates." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Materials — ARTICITI Admin" },
+      { property: "og:title", content: "Materials — ARTINCITY Admin" },
       { property: "og:description", content: "Manage materials and their base rates." },
     ],
   }),

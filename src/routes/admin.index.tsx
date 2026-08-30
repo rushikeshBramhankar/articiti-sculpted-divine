@@ -9,11 +9,11 @@ export const Route = createFileRoute("/admin/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Dashboard — ARTICITI Admin" },
-      { name: "description", content: "Business overview for the ARTICITI team." },
+      { title: "Dashboard — ARTINCITY Admin" },
+      { name: "description", content: "Business overview for the ARTINCITY team." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Dashboard — ARTICITI Admin" },
-      { property: "og:description", content: "Business overview for the ARTICITI team." },
+      { property: "og:title", content: "Dashboard — ARTINCITY Admin" },
+      { property: "og:description", content: "Business overview for the ARTINCITY team." },
     ],
   }),
   component: AdminHome,
