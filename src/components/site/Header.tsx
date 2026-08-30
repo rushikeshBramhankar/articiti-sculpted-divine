@@ -1,10 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-import { settingsQuery } from "@/lib/queries";
-import { cn } from "@/lib/utils";
+import { Logo } from "@/components/site/Logo";
 
 const NAV = [
   { to: "/explore", label: "Explore" },
