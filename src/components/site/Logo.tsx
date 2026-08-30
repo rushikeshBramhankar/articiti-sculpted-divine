@@ -18,10 +18,10 @@ export function Logo({ className }: { className?: string }) {
         className="lowercase italic"
         style={{
           fontFamily: "var(--font-script)",
-          fontSize: "1.4em",
-          marginLeft: "0.12em",
-          marginRight: "0.08em",
-          transform: "translateY(0.12em)",
+          fontSize: "1.3em",
+          marginLeft: "0.3em",
+          marginRight: "0.3em",
+          transform: "translateY(0.08em)",
         }}
       >
         in
