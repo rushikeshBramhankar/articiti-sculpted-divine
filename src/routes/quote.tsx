@@ -6,7 +6,6 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { calculateEstimate, formatINR } from "@/lib/pricing";
 import {
-  finishesQuery,
   logEvent,
   materialsQuery,
   pricingRuleQuery,
@@ -29,7 +28,7 @@ export const Route = createFileRoute("/quote")({
       {
         name: "description",
         content:
-          "Enter your wall size, choose a material and finish, and get an estimated price range for your custom ARTINCITY wall sculpture.",
+          "Enter your wall size and choose your design, and get an estimated price range for your custom ARTINCITY wall sculpture.",
       },
       { property: "og:title", content: "Get a Quotation — ARTINCITY" },
       {
@@ -41,13 +40,12 @@ export const Route = createFileRoute("/quote")({
   component: QuotePage,
 });
 
-const STEPS = ["Size", "Material", "Finish", "Estimate", "Enquiry"];
+const STEPS = ["Size", "Estimate", "Enquiry"];
 
 function QuotePage() {
   const search = Route.useSearch();
   const { data: products = [] } = useQuery(productsQuery());
   const { data: materials = [] } = useQuery(materialsQuery);
-  const { data: finishes = [] } = useQuery(finishesQuery);
   const { data: rules = [] } = useQuery(pricingRuleQuery);
   const { data: settings } = useQuery(settingsQuery);
 
@@ -56,9 +54,6 @@ function QuotePage() {
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
   const [preset, setPreset] = useState<string | null>(null);
-  const [materialId, setMaterialId] = useState<string | null>(null);
-  const [recommend, setRecommend] = useState(true);
-  const [finishId, setFinishId] = useState<string | null>(null);
   const [installation, setInstallation] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
@@ -72,8 +67,7 @@ function QuotePage() {
   });
 
   const product = products.find((p) => p.slug === productSlug) ?? products[0];
-  const material = materials.find((m) => m.id === materialId) ?? null;
-  const finish = finishes.find((f) => f.id === finishId) ?? null;
+  const recommendedMaterial = materials[1] ?? materials[0] ?? null;
 
   const presetArea: Record<string, number> = { Small: 12, Medium: 24, Large: 40 };
   const area = useMemo(() => {
@@ -85,17 +79,15 @@ function QuotePage() {
 
   const estimate = useMemo(() => {
     if (!product) return null;
-    const effectiveMaterial = material ?? (recommend ? (materials[1] ?? materials[0] ?? null) : null);
-    if (!effectiveMaterial) return null;
     return calculateEstimate({
       product,
-      material: effectiveMaterial,
-      finish,
+      material: recommendedMaterial,
+      finish: null,
       areaSqft: area,
       installation,
       rules,
     });
-  }, [product, material, recommend, materials, finish, area, installation, rules]);
+  }, [product, recommendedMaterial, area, installation, rules]);
 
   async function submitEnquiry() {
     if (!form.full_name || !form.phone) {
@@ -116,8 +108,8 @@ function QuotePage() {
         height_ft: preset ? null : parseFloat(height) || null,
         area_sqft: area || null,
         size_preset: preset,
-        material_id: material?.id ?? null,
-        finish_id: finish?.id ?? null,
+        material_id: null,
+        finish_id: null,
         installation_required: installation,
         estimated_price_min: estimate ? Math.round(estimate.min) : null,
         estimated_price_max: estimate ? Math.round(estimate.max) : null,
@@ -142,8 +134,8 @@ function QuotePage() {
           city: form.city || null,
           product: product?.name ?? null,
           size: area ? `${area} sq.ft` : null,
-          material: material?.name ?? null,
-          finish: finish?.name ?? null,
+          material: "Recommended by ArtInCity",
+          finish: null,
           estimate: estimate ? `${formatINR(estimate.min)} – ${formatINR(estimate.max)}` : null,
           message: form.message || null,
           adminUrl: `${window.location.origin}/admin/enquiries/${inserted.id}`,
@@ -157,8 +149,6 @@ function QuotePage() {
   const waMessage = enquiryMessage({
     product: product?.name,
     size: area ? `${area} sq.ft` : undefined,
-    material: material?.name,
-    finish: finish?.name,
   });
 
   if (submitted) {
@@ -196,7 +186,7 @@ function QuotePage() {
         <h1 className="font-display text-4xl sm:text-5xl">Let's Create Yours.</h1>
 
         <ol className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
-          {STEPS.map((s, i) => i === 1 ? null : (
+          {STEPS.map((s, i) => (
             <li
               key={s}
               className={cn(
@@ -204,7 +194,7 @@ function QuotePage() {
                 i === step ? "text-accent" : "text-muted-foreground",
               )}
             >
-              {i === 0 ? 1 : i} {s}
+              {i + 1} {s}
             </li>
           ))}
         </ol>
@@ -289,83 +279,6 @@ function QuotePage() {
 
           {step === 1 && (
             <div>
-              <h2 className="font-display text-2xl">Choose Your Material.</h2>
-              <p className="mt-3 text-sm text-muted-foreground">
-                We'll recommend the most suitable option based on your design and size.
-              </p>
-              <div className="mt-8 grid gap-5 sm:grid-cols-2">
-                {materials.map((m) => (
-                  <button
-                    key={m.id}
-                    onClick={() => {
-                      setMaterialId(m.id);
-                      setRecommend(false);
-                    }}
-                    className={cn(
-                      "border p-6 text-left transition-colors",
-                      materialId === m.id ? "border-accent" : "border-border",
-                    )}
-                  >
-                    <p className="text-sm tracking-[0.14em] uppercase">{m.name}</p>
-                    <p className="mt-2 text-sm text-muted-foreground">{m.short_description}</p>
-                    <p className="mt-3 text-xs text-muted-foreground">
-                      Suitable for: {m.suitable_for}
-                    </p>
-                    {m.base_rate > 0 && (
-                      <p className="mt-3 text-xs tracking-[0.14em] text-accent uppercase">
-                        from {formatINR(m.base_rate)} / sq.ft
-                      </p>
-                    )}
-                  </button>
-                ))}
-              </div>
-              <button
-                onClick={() => {
-                  setRecommend(true);
-                  setMaterialId(null);
-                }}
-                className={cn(
-                  "mt-6 border px-6 py-4 text-[0.64rem] tracking-[0.18em] uppercase",
-                  recommend ? "border-accent text-accent" : "border-border",
-                )}
-              >
-                Not sure? Let us recommend the best material →
-              </button>
-            </div>
-          )}
-
-          {step === 2 && (
-            <div>
-              <h2 className="font-display text-2xl">Choose Your Finish.</h2>
-              <div className="mt-8 grid gap-5 sm:grid-cols-3">
-                {finishes.map((f) => (
-                  <button
-                    key={f.id}
-                    onClick={() => setFinishId(f.id)}
-                    className={cn(
-                      "border p-5 text-left",
-                      finishId === f.id ? "border-accent" : "border-border",
-                    )}
-                  >
-                    <span className="block h-16 w-full surface-sand" />
-                    <p className="mt-4 text-sm tracking-[0.14em] uppercase">{f.name}</p>
-                    <p className="mt-2 text-xs text-muted-foreground">{f.description}</p>
-                  </button>
-                ))}
-              </div>
-              <label className="mt-8 flex items-center gap-3 text-sm">
-                <input
-                  type="checkbox"
-                  checked={installation}
-                  onChange={(e) => setInstallation(e.target.checked)}
-                />
-                Include installation &amp; delivery
-              </label>
-            </div>
-          )}
-
-          {step === 3 && (
-            <div>
               <h2 className="font-display text-2xl">Your Estimate.</h2>
               <dl className="mt-8 grid gap-3 text-sm sm:grid-cols-2">
                 <div>
@@ -384,11 +297,7 @@ function QuotePage() {
                 </div>
                 <div>
                   <dt className="eyebrow">Material</dt>
-                  <dd className="mt-1">{material?.name ?? "Recommended by ArtInCity"}</dd>
-                </div>
-                <div>
-                  <dt className="eyebrow">Finish</dt>
-                  <dd className="mt-1">{finish?.name ?? "—"}</dd>
+                  <dd className="mt-1">Recommended by ArtInCity</dd>
                 </div>
                 <div>
                   <dt className="eyebrow">Installation</dt>
@@ -408,10 +317,19 @@ function QuotePage() {
                   selection, finishing, installation and location.
                 </p>
               </div>
+
+              <label className="mt-8 flex items-center gap-3 text-sm">
+                <input
+                  type="checkbox"
+                  checked={installation}
+                  onChange={(e) => setInstallation(e.target.checked)}
+                />
+                Include installation &amp; delivery
+              </label>
             </div>
           )}
 
-          {step === 4 && (
+          {step === 2 && (
             <div>
               <h2 className="font-display text-2xl">Bring This Design Home.</h2>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -457,14 +375,14 @@ function QuotePage() {
         <div className="mt-12 flex justify-between">
           <button
             disabled={step === 0}
-            onClick={() => setStep((s) => (s === 2 ? 0 : Math.max(0, s - 1)))}
+            onClick={() => setStep((s) => Math.max(0, s - 1))}
             className="text-[0.64rem] tracking-[0.2em] text-muted-foreground uppercase disabled:opacity-30"
           >
             ← Back
           </button>
-          {step < 4 && (
+          {step < STEPS.length - 1 && (
             <button
-              onClick={() => setStep((s) => (s === 0 ? 2 : Math.min(4, s + 1)))}
+              onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
               className="border border-accent px-7 py-3 text-[0.64rem] tracking-[0.2em] text-accent uppercase"
             >
               Continue →
