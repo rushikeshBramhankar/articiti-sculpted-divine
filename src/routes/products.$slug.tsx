@@ -101,7 +101,7 @@ function ProductPage() {
             <img
               src={mainImage}
               alt={`${product.name} 3D wall sculpture`}
-              className="aspect-[4/5] w-full object-cover"
+              className="bg-secondary mx-auto max-h-[72svh] w-auto max-w-full object-contain"
             />
           </button>
           {allImages.length > 1 && (
@@ -124,11 +124,16 @@ function ProductPage() {
                     type="button"
                     onClick={() => setActiveImage(url)}
                     aria-label={`Show image ${i + 1}`}
-                    className={`w-20 shrink-0 snap-start border-2 transition-colors md:w-24 ${
+                    className={`h-20 w-20 shrink-0 snap-start border-2 transition-colors md:h-24 md:w-24 ${
                       url === mainImage ? "border-accent" : "border-transparent opacity-70 hover:opacity-100"
                     }`}
                   >
-                    <img src={url} alt="" loading="lazy" className="aspect-square w-full object-cover" />
+                    <img
+                      src={url}
+                      alt=""
+                      loading="lazy"
+                      className="bg-secondary h-full w-full object-contain"
+                    />
                   </button>
                 ))}
               </div>
