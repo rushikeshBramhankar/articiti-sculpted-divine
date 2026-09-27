@@ -57,7 +57,7 @@ function QuotePage() {
   const [height, setHeight] = useState("");
   const [preset, setPreset] = useState<string | null>(null);
   const [materialId, setMaterialId] = useState<string | null>(null);
-  const [recommend, setRecommend] = useState(false);
+  const [recommend, setRecommend] = useState(true);
   const [finishId, setFinishId] = useState<string | null>(null);
   const [installation, setInstallation] = useState(true);
   const [submitted, setSubmitted] = useState(false);
@@ -196,7 +196,7 @@ function QuotePage() {
         <h1 className="font-display text-4xl sm:text-5xl">Let's Create Yours.</h1>
 
         <ol className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
-          {STEPS.map((s, i) => (
+          {STEPS.map((s, i) => i === 1 ? null : (
             <li
               key={s}
               className={cn(
@@ -204,7 +204,7 @@ function QuotePage() {
                 i === step ? "text-accent" : "text-muted-foreground",
               )}
             >
-              {i + 1} {s}
+              {i === 0 ? 1 : i} {s}
             </li>
           ))}
         </ol>
@@ -457,14 +457,14 @@ function QuotePage() {
         <div className="mt-12 flex justify-between">
           <button
             disabled={step === 0}
-            onClick={() => setStep((s) => Math.max(0, s - 1))}
+            onClick={() => setStep((s) => (s === 2 ? 0 : Math.max(0, s - 1)))}
             className="text-[0.64rem] tracking-[0.2em] text-muted-foreground uppercase disabled:opacity-30"
           >
             ← Back
           </button>
           {step < 4 && (
             <button
-              onClick={() => setStep((s) => Math.min(4, s + 1))}
+              onClick={() => setStep((s) => (s === 0 ? 2 : Math.min(4, s + 1)))}
               className="border border-accent px-7 py-3 text-[0.64rem] tracking-[0.2em] text-accent uppercase"
             >
               Continue →
