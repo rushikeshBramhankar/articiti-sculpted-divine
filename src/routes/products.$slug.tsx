@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -37,6 +38,9 @@ function ProductPage() {
   const { data: images = [] } = useQuery(productImagesQuery(product?.id));
   const { data: settings } = useQuery(settingsQuery);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
+  useEffect(() => setActiveImage(null), [slug]);
 
   useEffect(() => {
     if (product) void logEvent("product_view", { product_id: product.id, slug: product.slug });
@@ -83,17 +87,61 @@ function ProductPage() {
     );
   }
 
+  const allImages = Array.from(
+    new Set([...(product.images ?? []), ...(product.main_image_url ? [product.main_image_url] : [])].filter(Boolean)),
+  );
+  const mainImage = activeImage ?? allImages[0] ?? "";
   const waMessage = enquiryMessage({ product: product.name });
 
   return (
     <SiteShell>
       <section className="mx-auto grid max-w-7xl gap-10 px-5 pt-28 md:grid-cols-[1.15fr_1fr] md:px-10 md:pt-40">
-        <div className="relative">
-          <img
-            src={product.main_image_url ?? ""}
-            alt={`${product.name} 3D wall sculpture`}
-            className="w-full object-cover"
-          />
+        <div className="min-w-0">
+          <button type="button" onClick={() => setLightbox(mainImage)} className="block w-full">
+            <img
+              src={mainImage}
+              alt={`${product.name} 3D wall sculpture`}
+              className="aspect-[4/5] w-full object-cover"
+            />
+          </button>
+          {allImages.length > 1 && (
+            <div className="relative mt-4">
+              <button
+                type="button"
+                aria-label="Scroll thumbnails left"
+                onClick={() => stripRef.current?.scrollBy({ left: -300, behavior: "smooth" })}
+                className="absolute top-1/2 left-0 z-10 hidden -translate-y-1/2 bg-background/90 p-2 shadow md:block"
+              >
+                <ChevronLeft className="size-4" />
+              </button>
+              <div
+                ref={stripRef}
+                className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth [scrollbar-width:none] md:px-10 [&::-webkit-scrollbar]:hidden"
+              >
+                {allImages.map((url, i) => (
+                  <button
+                    key={url + i}
+                    type="button"
+                    onClick={() => setActiveImage(url)}
+                    aria-label={`Show image ${i + 1}`}
+                    className={`w-20 shrink-0 snap-start border-2 transition-colors md:w-24 ${
+                      url === mainImage ? "border-accent" : "border-transparent opacity-70 hover:opacity-100"
+                    }`}
+                  >
+                    <img src={url} alt="" loading="lazy" className="aspect-square w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                aria-label="Scroll thumbnails right"
+                onClick={() => stripRef.current?.scrollBy({ left: 300, behavior: "smooth" })}
+                className="absolute top-1/2 right-0 z-10 hidden -translate-y-1/2 bg-background/90 p-2 shadow md:block"
+              >
+                <ChevronRight className="size-4" />
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="md:pt-6">

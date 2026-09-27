@@ -4,6 +4,7 @@ import { ChevronDown, Plus, Trash2, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { db, slugify, formatINR, formatDate, SUITABLE_FOR_OPTIONS } from "@/lib/admin";
 import { ImageInput } from "./ImageInput";
+import { MultiImageInput } from "./MultiImageInput";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -41,6 +42,7 @@ interface ProductData {
   starting_price: number | null;
   pricing_mode: string;
   main_image_url: string;
+  images: string[];
   side_view_url: string;
   closeup_url: string;
   installation_image_url: string;
@@ -63,6 +65,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
     starting_price: 15000,
     pricing_mode: "per_sqft",
     main_image_url: "",
+    images: [],
     side_view_url: "",
     closeup_url: "",
     installation_image_url: "",
@@ -141,7 +144,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
 
   useMemo(() => {
     if (product) {
-      setForm(product);
+      setForm({ ...product, images: product.images ?? [] });
       setCheckedMaterials(selectedMaterials);
       setCheckedFinishes(selectedFinishes);
     }
@@ -149,7 +152,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
 
   const saveMutation = useMutation({
     mutationFn: async (status: "draft" | "published") => {
-      const payload = { ...form, status };
+      const payload = { ...form, status, main_image_url: form.images[0] ?? "", closeup_url: form.images[1] ?? "" };
       delete (payload as any)["id"];
       delete (payload as any)["created_at"];
       delete (payload as any)["updated_at"];
@@ -300,22 +303,16 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="mt-4 space-y-4">
-          <ImageInput
-            label="Main Image"
-            value={form.main_image_url}
-            onChange={(url) => setValue("main_image_url", url)}
+          <MultiImageInput
+            label="Product Images (first image is the main image)"
+            value={form.images}
+            onChange={(urls) => setValue("images", urls)}
             folder="products"
           />
           <ImageInput
             label="Side View"
             value={form.side_view_url}
             onChange={(url) => setValue("side_view_url", url)}
-            folder="products"
-          />
-          <ImageInput
-            label="Close-up"
-            value={form.closeup_url}
-            onChange={(url) => setValue("closeup_url", url)}
             folder="products"
           />
           <ImageInput
