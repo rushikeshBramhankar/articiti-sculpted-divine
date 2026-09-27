@@ -1,0 +1,3 @@
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS images text[] NOT NULL DEFAULT '{}'::text[];
+UPDATE public.products SET images = array_remove(ARRAY[main_image_url, closeup_url], NULL) WHERE cardinality(images) = 0;
+UPDATE public.products p SET images = p.images || coalesce((SELECT array_agg(pi.image_url ORDER BY pi.display_order) FROM public.product_images pi WHERE pi.product_id = p.id AND NOT (pi.image_url = ANY(p.images))), '{}');

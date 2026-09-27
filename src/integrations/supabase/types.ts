@@ -701,6 +701,7 @@ export type Database = {
           created_at: string
           display_order: number
           id: string
+          images: string[]
           installation_image_url: string | null
           is_featured: boolean
           long_description: string | null
@@ -725,6 +726,7 @@ export type Database = {
           created_at?: string
           display_order?: number
           id?: string
+          images?: string[]
           installation_image_url?: string | null
           is_featured?: boolean
           long_description?: string | null
@@ -749,6 +751,7 @@ export type Database = {
           created_at?: string
           display_order?: number
           id?: string
+          images?: string[]
           installation_image_url?: string | null
           is_featured?: boolean
           long_description?: string | null
