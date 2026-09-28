@@ -10,14 +10,14 @@ export function whatsappHref(
 export function enquiryMessage(parts: {
   product?: string | undefined;
   size?: string | undefined;
-  material?: string | undefined;
-  finish?: string | undefined;
+  thickness?: string | undefined;
+  price?: string | undefined;
 }) {
   return [
     `Hi ArtInCity, I'm interested in the ${parts.product ?? "wall sculpture"} wall sculpture.`,
     parts.size ? `Size: ${parts.size}` : null,
-    parts.material ? `Material: ${parts.material}` : null,
-    parts.finish ? `Finish: ${parts.finish}` : null,
+    parts.thickness ? `Thickness: ${parts.thickness}` : null,
+    parts.price ? `Price: ${parts.price}` : null,
     "I'd like to know the final quotation.",
   ]
     .filter(Boolean)

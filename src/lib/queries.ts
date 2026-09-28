@@ -18,9 +18,8 @@ export type Product = {
   slug: string;
   short_description: string | null;
   long_description: string | null;
-  starting_price: number;
-  compare_at_price: number | null;
-  pricing_mode: string;
+  size_sqft: number | null;
+  thickness_options: number[];
   main_image_url: string | null;
   images: string[];
   side_view_url: string | null;
@@ -55,22 +54,6 @@ export type Finish = {
   cost_type: string;
   image_url: string | null;
   display_order: number;
-};
-
-export type PricingRule = {
-  id: string;
-  name: string;
-  base_price: number;
-  size_multiplier: number;
-  thickness_cost: number;
-  painting_cost_per_sqft: number;
-  installation_cost: number;
-  delivery_cost: number;
-  complexity_multiplier: number;
-  minimum_price: number;
-  range_margin_pct: number;
-  product_id: string | null;
-  material_id: string | null;
 };
 
 export type ProductImage = {
@@ -125,7 +108,7 @@ export const categoriesQuery = queryOptions({
 });
 
 const PRODUCT_FIELDS =
-  "id,category_id,name,slug,short_description,long_description,starting_price,compare_at_price,pricing_mode,main_image_url,images,side_view_url,closeup_url,installation_image_url,ai_visualization_url,suitable_for,is_featured,display_order";
+  "id,category_id,name,slug,short_description,long_description,size_sqft,thickness_options,main_image_url,images,side_view_url,closeup_url,installation_image_url,ai_visualization_url,suitable_for,is_featured,display_order";
 
 export const productsQuery = (categoryId?: string) =>
   queryOptions({
@@ -221,19 +204,6 @@ export const finishesQuery = queryOptions({
         .select("id,name,slug,description,additional_cost,cost_type,image_url,display_order")
         .eq("is_active", true)
         .order("display_order"),
-    ),
-});
-
-export const pricingRuleQuery = queryOptions({
-  queryKey: ["pricing-rule"],
-  queryFn: async () =>
-    unwrap<PricingRule[]>(
-      await supabase
-        .from("pricing_rules")
-        .select(
-          "id,name,base_price,size_multiplier,thickness_cost,painting_cost_per_sqft,installation_cost,delivery_cost,complexity_multiplier,minimum_price,range_margin_pct,product_id,material_id",
-        )
-        .eq("is_active", true),
     ),
 });
 

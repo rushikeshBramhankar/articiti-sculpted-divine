@@ -1,30 +1,24 @@
-import type { Finish, Material, PricingRule, Product } from "./queries";
+import { queryOptions, useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { settingsQuery } from "./queries";
 
-export type EstimateInput = {
-  product: Product;
-  material?: Material | null;
-  finish?: Finish | null;
-  areaSqft: number;
-  installation: boolean;
-  rules: PricingRule[];
-};
+export const THICKNESS_OPTIONS = [25, 50, 75, 100] as const;
+export const DEFAULT_MARKUP_PCT = 40;
 
-export type Estimate = {
-  min: number;
-  max: number;
-  breakdown: { label: string; value: number }[];
-  exact: boolean;
-};
+export type ThicknessRate = { id: string; thickness_mm: number; rate_per_sqft: number };
 
-export function pickRule(rules: PricingRule[], productId?: string, materialId?: string) {
-  return (
-    rules.find((r) => r.product_id === productId && r.material_id === materialId) ??
-    rules.find((r) => r.product_id === productId && !r.material_id) ??
-    rules.find((r) => !r.product_id && r.material_id === materialId) ??
-    rules.find((r) => !r.product_id && !r.material_id) ??
-    null
-  );
-}
+export const thicknessRatesQuery = queryOptions({
+  queryKey: ["thickness-rates"],
+  staleTime: 5 * 60_000,
+  queryFn: async () => {
+    const res = await supabase
+      .from("thickness_rates")
+      .select("id,thickness_mm,rate_per_sqft")
+      .order("thickness_mm");
+    if (res.error) throw new Error(res.error.message);
+    return (res.data ?? []) as ThicknessRate[];
+  },
+});
 
 export function formatINR(value: number) {
   return new Intl.NumberFormat("en-IN", {
@@ -34,38 +28,43 @@ export function formatINR(value: number) {
   }).format(Math.round(value));
 }
 
-export function calculateEstimate(input: EstimateInput): Estimate | null {
-  const { product, material, finish, areaSqft, installation, rules } = input;
-  const rule = pickRule(rules, product.id, material?.id);
-  if (!rule || !material || areaSqft <= 0) return null;
+export type PriceInfo = { thickness: number; price: number; mrp: number; off: number };
 
-  const perSqft = material.pricing_unit === "per_sqft" ? material.base_rate : 0;
-  const materialCost = perSqft * areaSqft * rule.size_multiplier;
-  const finishCost = finish
-    ? finish.cost_type === "per_sqft"
-      ? finish.additional_cost * areaSqft
-      : finish.additional_cost
-    : 0;
-  const paintingCost = rule.painting_cost_per_sqft * areaSqft;
-  const installCost = installation ? rule.installation_cost + rule.delivery_cost : 0;
+export function computePrice(
+  sizeSqft: number | null | undefined,
+  thickness: number,
+  rates: ThicknessRate[],
+  markupPct: number,
+): PriceInfo | null {
+  const rate = rates.find((r) => r.thickness_mm === thickness)?.rate_per_sqft;
+  if (!sizeSqft || sizeSqft <= 0 || rate == null) return null;
+  const price = Math.round(Number(sizeSqft) * Number(rate));
+  const mrp = Math.ceil((price * (1 + markupPct / 100)) / 100) * 100;
+  const off = mrp > 0 ? Math.round(((mrp - price) / mrp) * 100) : 0;
+  return { thickness, price, mrp, off };
+}
 
-  const subtotal =
-    (rule.base_price + materialCost + rule.thickness_cost + finishCost + paintingCost + installCost) *
-    rule.complexity_multiplier;
+type Priceable = { size_sqft?: number | null; thickness_options?: number[] | null };
 
-  const total = Math.max(subtotal, rule.minimum_price);
-  const margin = rule.range_margin_pct / 100;
+export function productThicknesses(p: Priceable | null | undefined) {
+  return [...(p?.thickness_options ?? [])].sort((a, b) => a - b);
+}
 
+export function usePricing() {
+  const { data: rates = [] } = useQuery(thicknessRatesQuery);
+  const { data: settings } = useQuery(settingsQuery);
+  const parsed = Number(settings?.["mrp_markup_pct"]);
+  const markup = Number.isFinite(parsed) && settings?.["mrp_markup_pct"] ? parsed : DEFAULT_MARKUP_PCT;
   return {
-    min: total * (1 - margin),
-    max: total * (1 + margin),
-    exact: material.pricing_unit === "per_sqft" && product.pricing_mode === "per_sqft",
-    breakdown: [
-      { label: "Base design", value: rule.base_price },
-      { label: `Material — ${material.name}`, value: materialCost },
-      { label: finish ? `Finish — ${finish.name}` : "Finish", value: finishCost },
-      { label: "Artist detailing", value: paintingCost },
-      { label: "Installation & delivery", value: installCost },
-    ],
+    rates,
+    markup,
+    priceFor: (p: Priceable | null | undefined, thickness: number) =>
+      computePrice(p?.size_sqft, thickness, rates, markup),
+    lowestFor: (p: Priceable | null | undefined) => {
+      const opts = productThicknesses(p)
+        .map((t) => computePrice(p?.size_sqft, t, rates, markup))
+        .filter((x): x is PriceInfo => x != null);
+      return opts.sort((a, b) => a.price - b.price)[0] ?? null;
+    },
   };
 }
