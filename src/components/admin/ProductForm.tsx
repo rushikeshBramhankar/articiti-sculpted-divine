@@ -144,15 +144,21 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
 
   useMemo(() => {
     if (product) {
-      setForm({ ...product, images: product.images ?? [] });
+      setForm({
+        ...product,
+        images: (product.images ?? []).filter((u) => typeof u === "string" && u.trim() !== ""),
+      });
       setCheckedMaterials(selectedMaterials);
       setCheckedFinishes(selectedFinishes);
     }
   }, [product, selectedMaterials, selectedFinishes]);
 
+  const [imagesUploading, setImagesUploading] = useState(false);
+
   const saveMutation = useMutation({
     mutationFn: async (status: "draft" | "published") => {
-      const payload = { ...form, status, main_image_url: form.images[0] ?? "", closeup_url: form.images[1] ?? "" };
+      const images = form.images.filter((u) => typeof u === "string" && u.trim() !== "");
+      const payload = { ...form, images, status, main_image_url: images[0] ?? "", closeup_url: images[1] ?? "" };
       delete (payload as any)["id"];
       delete (payload as any)["created_at"];
       delete (payload as any)["updated_at"];
