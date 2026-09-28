@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import type { Product } from "@/lib/queries";
-import { formatINR } from "@/lib/pricing";
+import { usePricing } from "@/lib/pricing";
+import { PriceTag } from "./PriceTag";
 
 export function ProductCard({ product }: { product: Product }) {
-  const hasDiscount =
-    product.compare_at_price != null && product.compare_at_price > product.starting_price;
+  const { lowestFor } = usePricing();
+  const lowest = lowestFor(product);
 
   return (
     <Link
@@ -24,16 +25,9 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="pt-5">
         <h3 className="font-display text-xl">{product.name}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{product.short_description}</p>
-        <div className="mt-4 flex items-center justify-between">
-          <span className="flex items-baseline gap-2 text-xs tracking-[0.14em] text-foreground uppercase">
-            Starting from {formatINR(product.starting_price)}
-            {hasDiscount && (
-              <span className="text-[0.7rem] tracking-normal text-muted-foreground/60 line-through">
-                {formatINR(product.compare_at_price as number)}
-              </span>
-            )}
-          </span>
-          <span className="text-xs tracking-[0.14em] text-accent uppercase">View Design →</span>
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <div>{lowest && <PriceTag info={lowest} size="sm" prefix="From " />}</div>
+          <span className="shrink-0 text-xs tracking-[0.14em] text-accent uppercase">View Design →</span>
         </div>
       </div>
     </Link>

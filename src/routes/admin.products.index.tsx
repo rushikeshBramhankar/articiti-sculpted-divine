@@ -44,7 +44,8 @@ interface Product {
   name: string;
   slug: string;
   category_id: string;
-  starting_price: number | null;
+  size_sqft: number | null;
+  thickness_options: number[] | null;
   status: string;
   is_featured: boolean;
   main_image_url: string;
@@ -182,7 +183,7 @@ function ProductsPage() {
               <TableHead className="w-16">Image</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Starting Price</TableHead>
+              <TableHead>Pricing</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Featured</TableHead>
               <TableHead>Updated</TableHead>
@@ -218,7 +219,7 @@ function ProductsPage() {
                   </TableCell>
                   <TableCell className="font-medium">{product.name}</TableCell>
                   <TableCell>{product.category?.name || "—"}</TableCell>
-                  <TableCell>{formatINR(product.starting_price)}</TableCell>
+                  <TableCell>{product.size_sqft && product.thickness_options?.length ? `${product.size_sqft} sq.ft · ${product.thickness_options.join("/")} mm` : "Pricing not set"}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded text-xs font-semibold ${
                       product.status === "published" 

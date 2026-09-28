@@ -160,6 +160,7 @@ export type Database = {
           size_preset: string | null
           state: string | null
           status: string
+          thickness_mm: number | null
           updated_at: string
           wall_image_url: string | null
           whatsapp: string | null
@@ -187,6 +188,7 @@ export type Database = {
           size_preset?: string | null
           state?: string | null
           status?: string
+          thickness_mm?: number | null
           updated_at?: string
           wall_image_url?: string | null
           whatsapp?: string | null
@@ -214,6 +216,7 @@ export type Database = {
           size_preset?: string | null
           state?: string | null
           status?: string
+          thickness_mm?: number | null
           updated_at?: string
           wall_image_url?: string | null
           whatsapp?: string | null
@@ -710,10 +713,12 @@ export type Database = {
           pricing_mode: string
           short_description: string | null
           side_view_url: string | null
+          size_sqft: number | null
           slug: string
           starting_price: number
           status: string
           suitable_for: string[]
+          thickness_options: number[]
           updated_at: string
           video_url: string | null
           view_count: number
@@ -735,10 +740,12 @@ export type Database = {
           pricing_mode?: string
           short_description?: string | null
           side_view_url?: string | null
+          size_sqft?: number | null
           slug: string
           starting_price?: number
           status?: string
           suitable_for?: string[]
+          thickness_options?: number[]
           updated_at?: string
           video_url?: string | null
           view_count?: number
@@ -760,10 +767,12 @@ export type Database = {
           pricing_mode?: string
           short_description?: string | null
           side_view_url?: string | null
+          size_sqft?: number | null
           slug?: string
           starting_price?: number
           status?: string
           suitable_for?: string[]
+          thickness_options?: number[]
           updated_at?: string
           video_url?: string | null
           view_count?: number
@@ -777,6 +786,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      thickness_rates: {
+        Row: {
+          created_at: string
+          id: string
+          rate_per_sqft: number
+          thickness_mm: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          rate_per_sqft?: number
+          thickness_mm: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          rate_per_sqft?: number
+          thickness_mm?: number
+          updated_at?: string
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {

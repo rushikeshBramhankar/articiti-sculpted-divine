@@ -29,8 +29,7 @@ interface Enquiry {
   id: string;
   full_name: string;
   product_id: string | null;
-  material_id: string | null;
-  finish_id: string | null;
+  thickness_mm: number | null;
   city: string | null;
   area_sqft: number | null;
   size_preset: string | null;
@@ -40,8 +39,6 @@ interface Enquiry {
   status: string;
   is_read: boolean;
   product?: { name: string; category_id: string };
-  material?: { name: string };
-  finish?: { name: string };
   category?: { name: string };
 }
 
@@ -53,7 +50,7 @@ function EnquiriesPage() {
     queryFn: async () => {
       const res = await db
         .from("enquiries")
-        .select("*, product:products(name,category_id), category:products(category:categories(name)), material:materials(name), finish:finishes(name)")
+        .select("*, product:products(name,category_id), category:products(category:categories(name))")
         .order("created_at", { ascending: false });
       if (res.error) throw new Error(res.error.message);
       return (res.data ?? []) as Enquiry[];
@@ -80,9 +77,8 @@ function EnquiriesPage() {
               <TableHead>Name</TableHead>
               <TableHead>Product</TableHead>
               <TableHead>Size</TableHead>
-              <TableHead>Material</TableHead>
-              <TableHead>Finish</TableHead>
-              <TableHead>Price Range</TableHead>
+              <TableHead>Thickness</TableHead>
+              <TableHead>Price</TableHead>
               <TableHead>City</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Status</TableHead>
@@ -112,11 +108,10 @@ function EnquiriesPage() {
                   <TableCell>
                     {e.area_sqft ? `${e.area_sqft} sq.ft` : e.size_preset ? e.size_preset : "—"}
                   </TableCell>
-                  <TableCell>{e.material?.name || "—"}</TableCell>
-                  <TableCell>{e.finish?.name || "—"}</TableCell>
+                  <TableCell>{e.thickness_mm ? `${e.thickness_mm} mm` : "—"}</TableCell>
                   <TableCell>
-                    {e.estimated_price_min && e.estimated_price_max
-                      ? `${formatINR(e.estimated_price_min)} – ${formatINR(e.estimated_price_max)}`
+                    {e.estimated_price_max
+                      ? formatINR(e.estimated_price_max)
                       : "—"}
                   </TableCell>
                   <TableCell>{e.city || "—"}</TableCell>

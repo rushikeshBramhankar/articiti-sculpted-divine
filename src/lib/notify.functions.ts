@@ -8,8 +8,7 @@ const schema = z.object({
   city: z.string().optional().nullable(),
   product: z.string().optional().nullable(),
   size: z.string().optional().nullable(),
-  material: z.string().optional().nullable(),
-  finish: z.string().optional().nullable(),
+  thickness: z.string().optional().nullable(),
   estimate: z.string().optional().nullable(),
   message: z.string().optional().nullable(),
   adminUrl: z.string(),
@@ -28,9 +27,8 @@ export const notifyNewEnquiry = createServerFn({ method: "POST" })
       ["City", data.city],
       ["Product", data.product],
       ["Size", data.size],
-      ["Material", data.material],
-      ["Finish", data.finish],
-      ["Estimate", data.estimate],
+      ["Thickness", data.thickness],
+      ["Price", data.estimate],
       ["Message", data.message],
     ];
 
