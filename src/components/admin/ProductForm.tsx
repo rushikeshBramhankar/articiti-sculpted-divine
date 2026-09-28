@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { db, slugify, formatINR, formatDate, SUITABLE_FOR_OPTIONS } from "@/lib/admin";
 import { ImageInput } from "./ImageInput";
 import { MultiImageInput } from "./MultiImageInput";
+import { THICKNESS_OPTIONS, usePricing, formatINR as fmtPrice } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,8 +40,8 @@ interface ProductData {
   slug: string;
   short_description: string;
   long_description: string;
-  starting_price: number | null;
-  pricing_mode: string;
+  size_sqft: number | null;
+  thickness_options: number[];
   main_image_url: string;
   images: string[];
   side_view_url: string;
@@ -56,14 +57,15 @@ interface ProductData {
 
 export function ProductForm({ productId, onSuccess }: ProductFormProps) {
   const qc = useQueryClient();
+  const pricing = usePricing();
   const [form, setForm] = useState<ProductData>({
     category_id: null,
     name: "",
     slug: "",
     short_description: "",
     long_description: "",
-    starting_price: 15000,
-    pricing_mode: "per_sqft",
+    size_sqft: null,
+    thickness_options: [],
     main_image_url: "",
     images: [],
     side_view_url: "",
@@ -146,6 +148,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
     if (product) {
       setForm({
         ...product,
+        thickness_options: product.thickness_options ?? [],
         images: (product.images ?? []).filter((u) => typeof u === "string" && u.trim() !== ""),
       });
       setCheckedMaterials(selectedMaterials);
@@ -284,15 +287,42 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
               rows={4}
             />
           </div>
-          <div className="space-y-2">
-            <Label>Starting Price (₹) *</Label>
+          <div className="space-y-3 border-t pt-4">
+            <p className="text-base font-semibold">Pricing</p>
+            <Label>Size (sq ft) *</Label>
             <Input
               type="number"
-              value={form.starting_price ?? ""}
-              onChange={(e) => setValue("starting_price", e.target.value ? Number(e.target.value) : null)}
-              placeholder="e.g. 15000"
+              value={form.size_sqft ?? ""}
+              onChange={(e) => setValue("size_sqft", e.target.value ? Number(e.target.value) : null)}
+              placeholder="e.g. 20"
             />
-            <p className="text-xs text-muted-foreground">Displayed publicly as "Starting from ₹X"</p>
+            <Label>Thickness options *</Label>
+            <div className="flex flex-wrap gap-4">
+              {THICKNESS_OPTIONS.map((t) => (
+                <label key={t} className="flex items-center gap-2 text-sm">
+                  <Checkbox
+                    checked={form.thickness_options.includes(t)}
+                    onCheckedChange={(c) =>
+                      setValue(
+                        "thickness_options",
+                        c
+                          ? [...form.thickness_options, t].sort((a, b) => a - b)
+                          : form.thickness_options.filter((x) => x !== t),
+                      )
+                    }
+                  />
+                  {t} mm
+                </label>
+              ))}
+            </div>
+            {form.thickness_options.map((t) => {
+              const info = pricing.priceFor(form, t);
+              return (
+                <p key={t} className="text-xs text-muted-foreground">
+                  {t} mm: {info ? `${fmtPrice(info.price)} (MRP ${fmtPrice(info.mrp)}, ${info.off}% off)` : "enter size"}
+                </p>
+              );
+            })}
           </div>
         </CollapsibleContent>
       </Collapsible>
@@ -506,8 +536,12 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
       toast.error("Please select a Category.");
       return;
     }
-    if (form.starting_price == null || form.starting_price <= 0 || Number.isNaN(form.starting_price)) {
-      toast.error("Starting Price must be a positive number.");
+    if (!form.size_sqft || form.size_sqft <= 0) {
+      toast.error("Size (sq ft) must be greater than 0.");
+      return;
+    }
+    if (form.thickness_options.length === 0) {
+      toast.error("Select at least one thickness option.");
       return;
     }
     saveMutation.mutate(status);

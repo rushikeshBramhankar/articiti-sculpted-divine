@@ -6,7 +6,9 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatINR } from "@/lib/pricing";
+import { usePricing, productThicknesses } from "@/lib/pricing";
+import { PriceTag } from "@/components/site/PriceTag";
+import { cn } from "@/lib/utils";
 import { logEvent, productImagesQuery, productQuery, settingsQuery } from "@/lib/queries";
 import { enquiryMessage, whatsappHref } from "@/components/site/brand";
 
@@ -19,7 +21,7 @@ export const Route = createFileRoute("/products/$slug")({
         { title },
         {
           name: "description",
-          content: `${name}: a contemporary 3D devotional wall sculpture by ARTINCITY, made to your wall size, material and finish.`,
+          content: `${name}: a contemporary 3D devotional wall sculpture by ARTINCITY, made to order.`,
         },
         { property: "og:title", content: title },
         {
@@ -37,6 +39,8 @@ function ProductPage() {
   const { data: product, isLoading } = useQuery(productQuery(slug));
   const { data: images = [] } = useQuery(productImagesQuery(product?.id));
   const { data: settings } = useQuery(settingsQuery);
+  const pricing = usePricing();
+  const [thickness, setThickness] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [activeImage, setActiveImage] = useState<string | null>(null);
   const stripRef = useRef<HTMLDivElement>(null);
@@ -98,7 +102,10 @@ function ProductPage() {
     ),
   );
   const mainImage = activeImage ?? allImages[0] ?? "";
-  const waMessage = enquiryMessage({ product: product.name });
+  const opts = productThicknesses(product);
+  const selThick = thickness != null && opts.includes(thickness) ? thickness : opts[0];
+  const info = selThick != null ? pricing.priceFor(product, selThick) : null;
+  const waMessage = enquiryMessage({ product: product.name, thickness: selThick ? `${selThick} mm` : undefined });
 
   return (
     <SiteShell>
@@ -166,17 +173,36 @@ function ProductPage() {
           <p className="mt-3 text-xs tracking-[0.2em] text-muted-foreground uppercase">
             Contemporary 3D Wall Sculpture
           </p>
-          <p className="font-display mt-8 text-3xl">
-            Starting from {formatINR(product.starting_price)}
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Final pricing depends on size, material, detailing, finish and installation.
-          </p>
+          {info ? (
+            <div className="mt-8">
+              <div className="flex flex-wrap gap-3">
+                {opts.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setThickness(t)}
+                    className={cn(
+                      "border px-4 py-2 text-xs tracking-[0.14em] uppercase",
+                      t === selThick ? "border-accent text-accent" : "border-border text-muted-foreground",
+                    )}
+                  >
+                    {t} mm
+                  </button>
+                ))}
+              </div>
+              <div className="mt-5">
+                <PriceTag info={info} />
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">Inclusive of all charges</p>
+            </div>
+          ) : (
+            <p className="font-display mt-8 text-2xl">Price on request</p>
+          )}
 
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
               to="/quote"
-              search={{ product: product.slug }}
+              search={{ product: product.slug, thickness: info ? selThick : undefined }}
               className="bg-accent px-7 py-4 text-[0.66rem] tracking-[0.22em] text-accent-foreground uppercase"
             >
               Get Quotation

@@ -38,14 +38,11 @@ interface EnquiryDetail {
   is_read: boolean;
   created_at: string;
   product_id: string | null;
-  material_id: string | null;
-  finish_id: string | null;
+  thickness_mm: number | null;
   estimated_price_min: number | null;
   estimated_price_max: number | null;
   installation_required: boolean;
   product?: { name: string; main_image_url: string };
-  material?: { name: string };
-  finish?: { name: string };
 }
 
 function EnquiryDetailPage() {
@@ -59,7 +56,7 @@ function EnquiryDetailPage() {
     queryFn: async () => {
       const res = await db
         .from("enquiries")
-        .select("*, product:products(name,main_image_url), material:materials(name), finish:finishes(name)")
+        .select("*, product:products(name,main_image_url)")
         .eq("id", id)
         .single();
       if (res.error) throw new Error(res.error.message);
@@ -151,11 +148,8 @@ function EnquiryDetailPage() {
                   <p className="text-sm text-muted-foreground">
                     Size: {enquiry.area_sqft ? `${enquiry.area_sqft} sq.ft` : enquiry.size_preset || "Custom"}
                   </p>
-                  {enquiry.material && (
-                    <p className="text-sm text-muted-foreground">Material: {enquiry.material.name}</p>
-                  )}
-                  {enquiry.finish && (
-                    <p className="text-sm text-muted-foreground">Finish: {enquiry.finish.name}</p>
+                  {enquiry.thickness_mm && (
+                    <p className="text-sm text-muted-foreground">Thickness: {enquiry.thickness_mm} mm</p>
                   )}
                 </div>
               </div>
@@ -192,13 +186,12 @@ function EnquiryDetailPage() {
         {/* Right: Actions */}
         <div className="space-y-4">
           <Card className="p-5 space-y-3">
-            <p className="text-xs text-muted-foreground uppercase tracking-wide">Estimated Price</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wide">Quoted Price</p>
             <p className="font-display text-2xl">
-              {enquiry.estimated_price_min && enquiry.estimated_price_max
-                ? `${formatINR(enquiry.estimated_price_min)} – ${formatINR(enquiry.estimated_price_max)}`
+              {enquiry.estimated_price_max
+                ? formatINR(enquiry.estimated_price_max)
                 : "—"}
             </p>
-            <p className="text-xs text-muted-foreground">Installation: {enquiry.installation_required ? "Yes" : "No"}</p>
             <p className="text-xs text-muted-foreground">Received: {formatDate(enquiry.created_at)}</p>
           </Card>
 
