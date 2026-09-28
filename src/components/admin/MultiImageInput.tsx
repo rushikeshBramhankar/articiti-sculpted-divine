@@ -10,27 +10,34 @@ export function MultiImageInput({
   value,
   onChange,
   folder = "uploads",
+  onBusyChange,
 }: {
   label: string;
   value: string[];
   onChange: (urls: string[]) => void;
   folder?: string;
+  onBusyChange?: (busy: boolean) => void;
 }) {
   const [busy, setBusy] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
 
+  function setBusyState(b: boolean) {
+    setBusy(b);
+    onBusyChange?.(b);
+  }
+
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
-    setBusy(true);
+    setBusyState(true);
     try {
       const urls: string[] = [];
       for (const f of Array.from(files)) urls.push(await uploadMedia(f, folder));
-      onChange([...value, ...urls]);
+      onChange([...value, ...urls].filter((u) => typeof u === "string" && u.trim() !== ""));
       toast.success(`Uploaded ${urls.length} image${urls.length > 1 ? "s" : ""}`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Upload failed");
     } finally {
-      setBusy(false);
+      setBusyState(false);
       if (ref.current) ref.current.value = "";
     }
   }

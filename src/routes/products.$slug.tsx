@@ -88,7 +88,14 @@ function ProductPage() {
   }
 
   const allImages = Array.from(
-    new Set([...(product.images ?? []), ...(product.main_image_url ? [product.main_image_url] : [])].filter(Boolean)),
+    new Set(
+      [
+        ...(product.images ?? []),
+        ...(product.main_image_url ? [product.main_image_url] : []),
+        ...(product.closeup_url ? [product.closeup_url] : []),
+        ...(product.installation_image_url ? [product.installation_image_url] : []),
+      ].filter((u) => typeof u === "string" && u.trim() !== ""),
+    ),
   );
   const mainImage = activeImage ?? allImages[0] ?? "";
   const waMessage = enquiryMessage({ product: product.name });
