@@ -317,7 +317,11 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
             onBusyChange={setImagesUploading}
           />
           <ImageInput
-...
+            label="Side View"
+            value={form.side_view_url}
+            onChange={(url) => setValue("side_view_url", url)}
+            folder="products"
+          />
           <ImageInput
             label="Installation Image"
             value={form.installation_image_url}
