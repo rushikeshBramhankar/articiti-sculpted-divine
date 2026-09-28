@@ -314,19 +314,19 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
             value={form.images}
             onChange={(urls) => setValue("images", urls)}
             folder="products"
+            onBusyChange={setImagesUploading}
           />
           <ImageInput
-            label="Side View"
-            value={form.side_view_url}
-            onChange={(url) => setValue("side_view_url", url)}
-            folder="products"
-          />
+...
           <ImageInput
             label="Installation Image"
             value={form.installation_image_url}
             onChange={(url) => setValue("installation_image_url", url)}
             folder="products"
           />
+          <p className="-mt-2 text-xs text-muted-foreground">
+            The installation image is shown as an extra photo on the product page.
+          </p>
           <ImageInput
             label="AI Visualization Image"
             value={form.ai_visualization_url}
