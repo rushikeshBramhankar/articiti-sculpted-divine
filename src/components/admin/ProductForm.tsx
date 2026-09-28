@@ -476,17 +476,17 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
         </Button>
         <Button
           onClick={() => handleSave("draft")}
-          disabled={saveMutation.isPending}
+          disabled={saveMutation.isPending || imagesUploading}
           className="flex-1"
         >
-          Save Draft
+          {imagesUploading ? "Uploading images…" : "Save Draft"}
         </Button>
         <Button
           onClick={() => handleSave("published")}
-          disabled={saveMutation.isPending}
+          disabled={saveMutation.isPending || imagesUploading}
           className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90"
         >
-          Publish
+          {imagesUploading ? "Uploading images…" : "Publish"}
         </Button>
       </div>
     </div>
