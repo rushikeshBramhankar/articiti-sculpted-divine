@@ -1,60 +1,61 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { SiteShell } from "@/components/site/SiteShell";
+import { PriceTag } from "@/components/site/PriceTag";
 import { supabase } from "@/integrations/supabase/client";
-import { calculateEstimate, formatINR } from "@/lib/pricing";
-import {
-  logEvent,
-  materialsQuery,
-  pricingRuleQuery,
-  productsQuery,
-  settingsQuery,
-} from "@/lib/queries";
+import { formatINR, productThicknesses, usePricing } from "@/lib/pricing";
+import { logEvent, productsQuery, settingsQuery } from "@/lib/queries";
 import { enquiryMessage, whatsappHref } from "@/components/site/brand";
 import { notifyNewEnquiry } from "@/lib/notify.functions";
 import { cn } from "@/lib/utils";
 
-type Search = { product?: string | undefined };
+type Search = { product?: string | undefined; thickness?: number | undefined };
 
 export const Route = createFileRoute("/quote")({
-  validateSearch: (search: Record<string, unknown>): Search => ({
-    product: typeof search["product"] === "string" ? search["product"] : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): Search => {
+    const t = Number(search["thickness"]);
+    return {
+      product: typeof search["product"] === "string" ? search["product"] : undefined,
+      thickness: search["thickness"] != null && Number.isFinite(t) ? t : undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Get a Quotation — ARTINCITY Custom Devotional Wall Art" },
       {
         name: "description",
         content:
-          "Enter your wall size and choose your design, and get an estimated price range for your custom ARTINCITY wall sculpture.",
+          "Choose your design and thickness and get the final price for your custom ARTINCITY wall sculpture.",
       },
       { property: "og:title", content: "Get a Quotation — ARTINCITY" },
       {
         property: "og:description",
-        content: "Estimate your custom devotional wall sculpture in a few steps.",
+        content: "Choose your design and thickness and get the final price instantly.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: QuotePage,
 });
 
-const STEPS = ["Size", "Estimate", "Enquiry"];
+const STEPS = ["Design & Thickness", "Price", "Enquiry"];
 
 function QuotePage() {
   const search = Route.useSearch();
-  const { data: products = [] } = useQuery(productsQuery());
-  const { data: materials = [] } = useQuery(materialsQuery);
-  const { data: rules = [] } = useQuery(pricingRuleQuery);
+  const { data: allProducts = [] } = useQuery(productsQuery());
   const { data: settings } = useQuery(settingsQuery);
+  const { priceFor } = usePricing();
+
+  const products = allProducts.filter(
+    (p) => p.size_sqft && p.size_sqft > 0 && productThicknesses(p).length > 0,
+  );
 
   const [step, setStep] = useState(0);
   const [productSlug, setProductSlug] = useState(search.product);
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
-  const [preset, setPreset] = useState<string | null>(null);
-  const [installation, setInstallation] = useState(true);
+  const [thickness, setThickness] = useState<number | undefined>(search.thickness);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     full_name: "",
@@ -67,27 +68,9 @@ function QuotePage() {
   });
 
   const product = products.find((p) => p.slug === productSlug) ?? products[0];
-  const recommendedMaterial = materials[1] ?? materials[0] ?? null;
-
-  const presetArea: Record<string, number> = { Small: 12, Medium: 24, Large: 40 };
-  const area = useMemo(() => {
-    if (preset) return presetArea[preset] ?? 0;
-    const w = parseFloat(width);
-    const h = parseFloat(height);
-    return w > 0 && h > 0 ? +(w * h).toFixed(1) : 0;
-  }, [width, height, preset]);
-
-  const estimate = useMemo(() => {
-    if (!product) return null;
-    return calculateEstimate({
-      product,
-      material: recommendedMaterial,
-      finish: null,
-      areaSqft: area,
-      installation,
-      rules,
-    });
-  }, [product, recommendedMaterial, area, installation, rules]);
+  const opts = productThicknesses(product);
+  const selThick = thickness != null && opts.includes(thickness) ? thickness : opts[0];
+  const info = product && selThick != null ? priceFor(product, selThick) : null;
 
   async function submitEnquiry() {
     if (!form.full_name || !form.phone) {
@@ -104,15 +87,10 @@ function QuotePage() {
         email: form.email || null,
         city: form.city || null,
         state: form.state || null,
-        width_ft: preset ? null : parseFloat(width) || null,
-        height_ft: preset ? null : parseFloat(height) || null,
-        area_sqft: area || null,
-        size_preset: preset,
-        material_id: null,
-        finish_id: null,
-        installation_required: installation,
-        estimated_price_min: estimate ? Math.round(estimate.min) : null,
-        estimated_price_max: estimate ? Math.round(estimate.max) : null,
+        thickness_mm: selThick ?? null,
+        area_sqft: product?.size_sqft ?? null,
+        estimated_price_min: info ? info.price : null,
+        estimated_price_max: info ? info.price : null,
         message: form.message || null,
       })
       .select("id")
@@ -133,10 +111,8 @@ function QuotePage() {
           phone: form.phone,
           city: form.city || null,
           product: product?.name ?? null,
-          size: area ? `${area} sq.ft` : null,
-          material: "Recommended by ArtInCity",
-          finish: null,
-          estimate: estimate ? `${formatINR(estimate.min)} – ${formatINR(estimate.max)}` : null,
+          thickness: selThick ? `${selThick} mm` : null,
+          estimate: info ? formatINR(info.price) : null,
           message: form.message || null,
           adminUrl: `${window.location.origin}/admin/enquiries/${inserted.id}`,
         },
@@ -148,7 +124,8 @@ function QuotePage() {
 
   const waMessage = enquiryMessage({
     product: product?.name,
-    size: area ? `${area} sq.ft` : undefined,
+    thickness: selThick ? `${selThick} mm` : undefined,
+    price: info ? formatINR(info.price) : undefined,
   });
 
   if (submitted) {
@@ -202,70 +179,22 @@ function QuotePage() {
         <div className="mt-12 border-t border-border pt-10">
           {step === 0 && (
             <div>
-              <h2 className="font-display text-2xl">What size is your wall?</h2>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <label className="text-sm">
-                  Width (ft)
-                  <input
-                    value={width}
-                    onChange={(e) => {
-                      setWidth(e.target.value);
-                      setPreset(null);
-                    }}
-                    inputMode="decimal"
-                    className="mt-2 w-full border border-border bg-card px-4 py-3"
-                  />
-                </label>
-                <label className="text-sm">
-                  Height (ft)
-                  <input
-                    value={height}
-                    onChange={(e) => {
-                      setHeight(e.target.value);
-                      setPreset(null);
-                    }}
-                    inputMode="decimal"
-                    className="mt-2 w-full border border-border bg-card px-4 py-3"
-                  />
-                </label>
-              </div>
-              <p className="mt-6 text-sm text-muted-foreground">
-                {area ? `Wall area: ${area} sq.ft` : "Custom sizes available."}
-              </p>
-
-              <p className="eyebrow mt-10">I don't know my exact size</p>
-              <div className="mt-4 flex gap-3">
-                {Object.keys(presetArea).map((p) => (
-                  <button
-                    key={p}
-                    onClick={() => {
-                      setPreset(p);
-                      setWidth("");
-                      setHeight("");
-                    }}
-                    className={cn(
-                      "border px-5 py-3 text-[0.64rem] tracking-[0.18em] uppercase",
-                      preset === p ? "border-accent text-accent" : "border-border",
-                    )}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
-
-              <p className="eyebrow mt-10">Your design</p>
-              <div className="mt-4 flex gap-4 overflow-x-auto pb-3">
+              <h2 className="font-display text-2xl">Choose your design</h2>
+              <div className="mt-6 flex gap-4 overflow-x-auto pb-3">
                 {products.map((p) => (
                   <button
                     key={p.id}
-                    onClick={() => setProductSlug(p.slug)}
+                    onClick={() => {
+                      setProductSlug(p.slug);
+                      setThickness(productThicknesses(p)[0]);
+                    }}
                     className={cn(
                       "w-28 shrink-0 border p-1",
                       p.slug === product?.slug ? "border-accent" : "border-transparent",
                     )}
                   >
                     <img
-                      src={p.main_image_url ?? ""}
+                      src={p.images?.[0] || p.main_image_url || ""}
                       alt={p.name}
                       loading="lazy"
                       className="aspect-3/4 w-full object-cover"
@@ -274,58 +203,49 @@ function QuotePage() {
                   </button>
                 ))}
               </div>
+
+              <h2 className="font-display mt-10 text-2xl">Choose thickness</h2>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {opts.map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setThickness(t)}
+                    className={cn(
+                      "border px-5 py-3 text-[0.64rem] tracking-[0.18em] uppercase",
+                      selThick === t ? "border-accent text-accent" : "border-border",
+                    )}
+                  >
+                    {t} mm
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
           {step === 1 && (
             <div>
-              <h2 className="font-display text-2xl">Your Estimate.</h2>
+              <h2 className="font-display text-2xl">Your Price.</h2>
               <dl className="mt-8 grid gap-3 text-sm sm:grid-cols-2">
                 <div>
                   <dt className="eyebrow">Your Design</dt>
-                  <dd className="mt-1">{product?.name}</dd>
+                  <dd className="mt-1">{product?.name ?? "—"}</dd>
                 </div>
                 <div>
-                  <dt className="eyebrow">Size</dt>
-                  <dd className="mt-1">
-                    {preset ? `${preset} wall` : width && height ? `${width} × ${height} ft` : "—"}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="eyebrow">Area</dt>
-                  <dd className="mt-1">{area ? `${area} sq.ft` : "—"}</dd>
-                </div>
-                <div>
-                  <dt className="eyebrow">Material</dt>
-                  <dd className="mt-1">Recommended by ArtInCity</dd>
-                </div>
-                <div>
-                  <dt className="eyebrow">Installation</dt>
-                  <dd className="mt-1">{installation ? "Yes" : "No"}</dd>
+                  <dt className="eyebrow">Thickness</dt>
+                  <dd className="mt-1">{selThick ? `${selThick} mm` : "—"}</dd>
                 </div>
               </dl>
-
               <div className="mt-10 surface-sand p-8">
-                <p className="eyebrow">Estimated Price</p>
-                <p className="font-display mt-3 text-4xl">
-                  {estimate
-                    ? `${formatINR(estimate.min)} – ${formatINR(estimate.max)}`
-                    : "Request final quotation"}
-                </p>
-                <p className="mt-4 text-xs text-muted-foreground">
-                  This is an estimated range. Final quotation depends on design detailing, material
-                  selection, finishing, installation and location.
-                </p>
+                <p className="eyebrow">Final Price</p>
+                <div className="mt-3">
+                  {info ? (
+                    <PriceTag info={info} />
+                  ) : (
+                    <p className="font-display text-3xl">Request final quotation</p>
+                  )}
+                </div>
+                <p className="mt-4 text-xs text-muted-foreground">Inclusive of all charges</p>
               </div>
-
-              <label className="mt-8 flex items-center gap-3 text-sm">
-                <input
-                  type="checkbox"
-                  checked={installation}
-                  onChange={(e) => setInstallation(e.target.checked)}
-                />
-                Include installation &amp; delivery
-              </label>
             </div>
           )}
 
@@ -354,7 +274,7 @@ function QuotePage() {
                 ))}
               </div>
               <label className="mt-4 block text-sm">
-                Anything else you'd like us to know?
+                Anything else you'd like us to know? (e.g. preferred size)
                 <textarea
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
