@@ -40,7 +40,8 @@ interface ProductData {
   slug: string;
   short_description: string;
   long_description: string;
-  size_sqft: number | null;
+  height_ft: number | null;
+  width_ft: number | null;
   thickness_options: number[];
   main_image_url: string;
   images: string[];
@@ -64,7 +65,8 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
     slug: "",
     short_description: "",
     long_description: "",
-    size_sqft: null,
+    height_ft: null,
+    width_ft: null,
     thickness_options: [],
     main_image_url: "",
     images: [],
@@ -78,6 +80,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
     is_featured: false,
     display_order: 0,
   });
+  const sizeSqft = (Number(form.height_ft) || 0) * (Number(form.width_ft) || 0);
 
   const [expandedSections, setExpandedSections] = useState({
     basic: true,
@@ -163,6 +166,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
       const images = form.images.filter((u) => typeof u === "string" && u.trim() !== "");
       const payload = { ...form, images, status, main_image_url: images[0] ?? "", closeup_url: images[1] ?? "" };
       delete (payload as any)["id"];
+      delete (payload as any)["size_sqft"];
       delete (payload as any)["created_at"];
       delete (payload as any)["updated_at"];
 
@@ -289,13 +293,29 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
           </div>
           <div className="space-y-3 border-t pt-4">
             <p className="text-base font-semibold">Pricing</p>
-            <Label>Size (sq ft) *</Label>
-            <Input
-              type="number"
-              value={form.size_sqft ?? ""}
-              onChange={(e) => setValue("size_sqft", e.target.value ? Number(e.target.value) : null)}
-              placeholder="e.g. 20"
-            />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <Label>Height (ft) *</Label>
+                <Input
+                  type="number"
+                  value={form.height_ft ?? ""}
+                  onChange={(e) => setValue("height_ft", e.target.value ? Number(e.target.value) : null)}
+                  placeholder="e.g. 4"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Width (ft) *</Label>
+                <Input
+                  type="number"
+                  value={form.width_ft ?? ""}
+                  onChange={(e) => setValue("width_ft", e.target.value ? Number(e.target.value) : null)}
+                  placeholder="e.g. 5"
+                />
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Size: {sizeSqft > 0 ? `${sizeSqft} sq ft` : "—"}
+            </p>
             <Label>Thickness options *</Label>
             <div className="flex flex-wrap gap-4">
               {THICKNESS_OPTIONS.map((t) => (
@@ -316,7 +336,7 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
               ))}
             </div>
             {form.thickness_options.map((t) => {
-              const info = pricing.priceFor(form, t);
+              const info = pricing.priceFor({ size_sqft: sizeSqft, thickness_options: form.thickness_options }, t);
               return (
                 <p key={t} className="text-xs text-muted-foreground">
                   {t} mm: {info ? `${fmtPrice(info.price)} (MRP ${fmtPrice(info.mrp)}, ${info.off}% off)` : "enter size"}
@@ -536,8 +556,8 @@ export function ProductForm({ productId, onSuccess }: ProductFormProps) {
       toast.error("Please select a Category.");
       return;
     }
-    if (!form.size_sqft || form.size_sqft <= 0) {
-      toast.error("Size (sq ft) must be greater than 0.");
+    if (!form.height_ft || form.height_ft <= 0 || !form.width_ft || form.width_ft <= 0) {
+      toast.error("Height and Width (ft) must be greater than 0.");
       return;
     }
     if (form.thickness_options.length === 0) {

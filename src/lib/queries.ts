@@ -19,6 +19,8 @@ export type Product = {
   short_description: string | null;
   long_description: string | null;
   size_sqft: number | null;
+  height_ft: number | null;
+  width_ft: number | null;
   thickness_options: number[];
   main_image_url: string | null;
   images: string[];
@@ -108,7 +110,7 @@ export const categoriesQuery = queryOptions({
 });
 
 const PRODUCT_FIELDS =
-  "id,category_id,name,slug,short_description,long_description,size_sqft,thickness_options,main_image_url,images,side_view_url,closeup_url,installation_image_url,ai_visualization_url,suitable_for,is_featured,display_order";
+  "id,category_id,name,slug,short_description,long_description,size_sqft,height_ft,width_ft,thickness_options,main_image_url,images,side_view_url,closeup_url,installation_image_url,ai_visualization_url,suitable_for,is_featured,display_order";
 
 export const productsQuery = (categoryId?: string) =>
   queryOptions({
