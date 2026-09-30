@@ -230,7 +230,7 @@ function PricingPage() {
                           value={r?.height ?? ""}
                           onChange={(e) => {
                             const v = e.target.value;
-                            setRows((s) => ({ ...s, [p.id]: { height: "", width: "", thicknesses: [], ...s[p.id], height: v } }));
+                            setRows((s) => ({ ...s, [p.id]: { ...(s[p.id] ?? { height: "", width: "", thicknesses: [] }), height: v } }));
                           }}
                         />
                       </TableCell>
@@ -243,7 +243,7 @@ function PricingPage() {
                           value={r?.width ?? ""}
                           onChange={(e) => {
                             const v = e.target.value;
-                            setRows((s) => ({ ...s, [p.id]: { height: "", width: "", thicknesses: [], ...s[p.id], width: v } }));
+                            setRows((s) => ({ ...s, [p.id]: { ...(s[p.id] ?? { height: "", width: "", thicknesses: [] }), width: v } }));
                           }}
                         />
                       </TableCell>
