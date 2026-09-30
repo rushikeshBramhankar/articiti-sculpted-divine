@@ -35,7 +35,13 @@ export function ProductCard({ product }: { product: Product }) {
           <div>{lowest && <PriceTag info={lowest} size="sm" prefix="From " />}</div>
           <span className="shrink-0 text-xs tracking-[0.14em] text-accent uppercase">View Design →</span>
         </div>
+        {hasSize && (
+          <p className="mt-2 text-xs text-muted-foreground">
+            {product.height_ft} ft x {product.width_ft} ft
+          </p>
+        )}
       </div>
+
     </Link>
   );
 }
