@@ -23,13 +23,13 @@ export const Route = createFileRoute("/quote")({
   },
   head: () => ({
     meta: [
-      { title: "Get a Quotation — ARTINCITY Custom Devotional Wall Art" },
+      { title: "Want Customization — ARTINCITY Custom Devotional Wall Art" },
       {
         name: "description",
         content:
-          "Choose your design and thickness and get the final price for your custom ARTINCITY wall sculpture.",
+          "Choose your design, size and thickness and get the final price for your custom ARTINCITY wall sculpture.",
       },
-      { property: "og:title", content: "Get a Quotation — ARTINCITY" },
+      { property: "og:title", content: "Want Customization — ARTINCITY" },
       {
         property: "og:description",
         content: "Choose your design and thickness and get the final price instantly.",
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/quote")({
   component: QuotePage,
 });
 
-const STEPS = ["Design & Thickness", "Price", "Enquiry"];
+const STEPS = ["Design & Size", "Price", "Enquiry"];
 
 function QuotePage() {
   const search = Route.useSearch();
@@ -56,6 +56,7 @@ function QuotePage() {
   const [step, setStep] = useState(0);
   const [productSlug, setProductSlug] = useState(search.product);
   const [thickness, setThickness] = useState<number | undefined>(search.thickness);
+  const [dims, setDims] = useState<{ h: string; w: string } | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     full_name: "",
@@ -70,7 +71,15 @@ function QuotePage() {
   const product = products.find((p) => p.slug === productSlug) ?? products[0];
   const opts = productThicknesses(product);
   const selThick = thickness != null && opts.includes(thickness) ? thickness : opts[0];
-  const info = product && selThick != null ? priceFor(product, selThick) : null;
+  const heightStr = dims?.h ?? (product?.height_ft != null ? String(product.height_ft) : "");
+  const widthStr = dims?.w ?? (product?.width_ft != null ? String(product.width_ft) : "");
+  const heightFt = Number(heightStr) > 0 ? Number(heightStr) : null;
+  const widthFt = Number(widthStr) > 0 ? Number(widthStr) : null;
+  const areaSqft = heightFt && widthFt ? heightFt * widthFt : null;
+  const info =
+    product && selThick != null && areaSqft
+      ? priceFor({ size_sqft: areaSqft, thickness_options: product.thickness_options }, selThick)
+      : null;
 
   async function submitEnquiry() {
     if (!form.full_name || !form.phone) {
@@ -88,7 +97,9 @@ function QuotePage() {
         city: form.city || null,
         state: form.state || null,
         thickness_mm: selThick ?? null,
-        area_sqft: product?.size_sqft ?? null,
+        area_sqft: areaSqft,
+        height_ft: heightFt,
+        width_ft: widthFt,
         estimated_price_min: info ? info.price : null,
         estimated_price_max: info ? info.price : null,
         message: form.message || null,
@@ -111,6 +122,7 @@ function QuotePage() {
           phone: form.phone,
           city: form.city || null,
           product: product?.name ?? null,
+          size: heightFt && widthFt ? `${heightFt} ft x ${widthFt} ft` : null,
           thickness: selThick ? `${selThick} mm` : null,
           estimate: info ? formatINR(info.price) : null,
           message: form.message || null,
@@ -124,6 +136,7 @@ function QuotePage() {
 
   const waMessage = enquiryMessage({
     product: product?.name,
+    size: heightFt && widthFt ? `${heightFt} ft x ${widthFt} ft` : undefined,
     thickness: selThick ? `${selThick} mm` : undefined,
     price: info ? formatINR(info.price) : undefined,
   });
@@ -204,6 +217,32 @@ function QuotePage() {
                 ))}
               </div>
 
+              <h2 className="font-display mt-10 text-2xl">Choose your size</h2>
+              <div className="mt-4 grid max-w-md grid-cols-2 gap-4">
+                <label className="text-sm">
+                  Height (ft)
+                  <input
+                    type="number"
+                    min={0}
+                    step="0.5"
+                    value={heightStr}
+                    onChange={(e) => setDims({ h: e.target.value, w: widthStr })}
+                    className="mt-2 w-full border border-border bg-card px-4 py-3"
+                  />
+                </label>
+                <label className="text-sm">
+                  Width (ft)
+                  <input
+                    type="number"
+                    min={0}
+                    step="0.5"
+                    value={widthStr}
+                    onChange={(e) => setDims({ h: heightStr, w: e.target.value })}
+                    className="mt-2 w-full border border-border bg-card px-4 py-3"
+                  />
+                </label>
+              </div>
+
               <h2 className="font-display mt-10 text-2xl">Choose thickness</h2>
               <div className="mt-4 flex flex-wrap gap-3">
                 {opts.map((t) => (
@@ -229,6 +268,10 @@ function QuotePage() {
                 <div>
                   <dt className="eyebrow">Your Design</dt>
                   <dd className="mt-1">{product?.name ?? "—"}</dd>
+                </div>
+                <div>
+                  <dt className="eyebrow">Size</dt>
+                  <dd className="mt-1">{heightFt && widthFt ? `${heightFt} ft x ${widthFt} ft` : "—"}</dd>
                 </div>
                 <div>
                   <dt className="eyebrow">Thickness</dt>

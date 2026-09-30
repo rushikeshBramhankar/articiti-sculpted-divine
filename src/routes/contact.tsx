@@ -59,7 +59,7 @@ function ContactPage() {
             to="/quote"
             className="border border-accent px-6 py-5 text-center text-[0.66rem] tracking-[0.2em] text-accent uppercase"
           >
-            Get a Quotation
+            Want Customization
           </Link>
         </div>
 
