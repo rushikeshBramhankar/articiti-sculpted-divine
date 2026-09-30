@@ -175,6 +175,12 @@ function ProductPage() {
           </p>
           {info ? (
             <div className="mt-8">
+              {product.height_ft && product.width_ft ? (
+                <p className="mb-4 text-sm">
+                  <span className="eyebrow mr-3">Size</span>
+                  {product.height_ft} ft x {product.width_ft} ft
+                </p>
+              ) : null}
               <div className="flex flex-wrap gap-3">
                 {opts.map((t) => (
                   <button
@@ -205,7 +211,7 @@ function ProductPage() {
               search={{ product: product.slug, thickness: info ? selThick : undefined }}
               className="bg-accent px-7 py-4 text-[0.66rem] tracking-[0.22em] text-accent-foreground uppercase"
             >
-              Get Quotation
+              Want Customization
             </Link>
             <Link
               to="/visualize"
