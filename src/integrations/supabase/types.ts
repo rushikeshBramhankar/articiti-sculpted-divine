@@ -703,6 +703,7 @@ export type Database = {
           compare_at_price: number | null
           created_at: string
           display_order: number
+          height_ft: number | null
           id: string
           images: string[]
           installation_image_url: string | null
@@ -722,6 +723,7 @@ export type Database = {
           updated_at: string
           video_url: string | null
           view_count: number
+          width_ft: number | null
         }
         Insert: {
           ai_visualization_url?: string | null
@@ -730,6 +732,7 @@ export type Database = {
           compare_at_price?: number | null
           created_at?: string
           display_order?: number
+          height_ft?: number | null
           id?: string
           images?: string[]
           installation_image_url?: string | null
@@ -749,6 +752,7 @@ export type Database = {
           updated_at?: string
           video_url?: string | null
           view_count?: number
+          width_ft?: number | null
         }
         Update: {
           ai_visualization_url?: string | null
@@ -757,6 +761,7 @@ export type Database = {
           compare_at_price?: number | null
           created_at?: string
           display_order?: number
+          height_ft?: number | null
           id?: string
           images?: string[]
           installation_image_url?: string | null
@@ -776,6 +781,7 @@ export type Database = {
           updated_at?: string
           video_url?: string | null
           view_count?: number
+          width_ft?: number | null
         }
         Relationships: [
           {
