@@ -6,6 +6,12 @@ import { PriceTag } from "./PriceTag";
 export function ProductCard({ product }: { product: Product }) {
   const { lowestFor } = usePricing();
   const lowest = lowestFor(product);
+  const hasSize =
+    product.height_ft != null &&
+    product.width_ft != null &&
+    Number(product.height_ft) > 0 &&
+    Number(product.width_ft) > 0;
+
 
   return (
     <Link
