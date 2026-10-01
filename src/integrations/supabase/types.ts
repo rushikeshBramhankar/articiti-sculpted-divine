@@ -95,6 +95,45 @@ export type Database = {
         }
         Relationships: []
       }
+      custom_requests: {
+        Row: {
+          created_at: string
+          email: string | null
+          height_ft: number | null
+          id: string
+          image_url: string
+          name: string
+          phone: string
+          status: string
+          updated_at: string
+          width_ft: number | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          height_ft?: number | null
+          id?: string
+          image_url: string
+          name: string
+          phone: string
+          status?: string
+          updated_at?: string
+          width_ft?: number | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          height_ft?: number | null
+          id?: string
+          image_url?: string
+          name?: string
+          phone?: string
+          status?: string
+          updated_at?: string
+          width_ft?: number | null
+        }
+        Relationships: []
+      }
       customers: {
         Row: {
           city: string | null
