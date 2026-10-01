@@ -16,6 +16,7 @@ import {
   Palette,
   Settings as SettingsIcon,
   ShoppingBag,
+  Upload,
   Users,
 } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
@@ -35,6 +36,7 @@ const NAV = [
   { to: "/admin/pricing", label: "Pricing Rules", icon: Calculator },
   { to: "/admin/finishes", label: "Finishes", icon: Palette },
   { to: "/admin/enquiries", label: "Enquiries", icon: Mail },
+  { to: "/admin/custom-requests", label: "Custom Requests", icon: Upload },
   { to: "/admin/customers", label: "Customers", icon: Users },
   { to: "/admin/orders", label: "Orders", icon: ShoppingBag },
   { to: "/admin/media", label: "Media", icon: ImageIcon },
