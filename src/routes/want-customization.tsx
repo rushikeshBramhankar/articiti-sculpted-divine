@@ -47,8 +47,8 @@ function WantCustomizationPage() {
 
   async function handleFile(file: File | undefined) {
     if (!file) return;
-    if (!file.type.startsWith("image/")) return toast.error("Please choose an image file");
-    if (file.size > 15 * 1024 * 1024) return toast.error("Image must be under 15 MB");
+    if (!file.type.startsWith("image/")) { toast.error("Please choose an image file");
+    if (file.size > 15 * 1024 * 1024) { toast.error("Image must be under 15 MB");
     setUploading(true);
     try {
       setImageUrl(await uploadMedia(file, "custom-requests"));
@@ -60,9 +60,9 @@ function WantCustomizationPage() {
   }
 
   async function submit() {
-    if (!imageUrl) return toast.error("Please upload an image of the design you want");
+    if (!imageUrl) { toast.error("Please upload an image of the design you want");
     const parsed = schema.safeParse(form);
-    if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Please check your details");
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Please check your details");
     const h = Number(form.height) > 0 ? Number(form.height) : null;
     const w = Number(form.width) > 0 ? Number(form.width) : null;
     setSending(true);
@@ -77,7 +77,7 @@ function WantCustomizationPage() {
       email: parsed.data.email || null,
     });
     setSending(false);
-    if (error) return toast.error("Could not send your request. Please try again.");
+    if (error) { toast.error("Could not send your request. Please try again.");
     void notifyCustomRequest({
       data: {
         name: parsed.data.name,
