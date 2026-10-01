@@ -218,7 +218,7 @@ function ProductPage() {
               search={{ product: product.slug }}
               className="border border-foreground/25 px-7 py-4 text-[0.66rem] tracking-[0.22em] uppercase"
             >
-              Visualize In My Home
+              Visualize AI preview
             </Link>
             <a
               href={whatsappHref(settings?.["whatsapp_number"] ?? "8010129969", waMessage)}
