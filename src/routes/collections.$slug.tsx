@@ -15,7 +15,7 @@ export const Route = createFileRoute("/collections/$slug")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
-      { name: "twitter:description", content: `Explore Interior by Veera ${name },
+      { name: "twitter:description", content: `Explore Interior by Veera ${name} 3D wall sculptures — timeless devotion interpreted through contemporary architectural art.` },
 
         { title },
         {

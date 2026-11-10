@@ -21,7 +21,7 @@ export const Route = createFileRoute("/products/$slug")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
-      { name: "twitter:description", content: `${name },
+      { name: "twitter:description", content: `${name}: a contemporary 3D devotional wall sculpture by Interior by Veera, made to order.` },
 
         { title },
         {
