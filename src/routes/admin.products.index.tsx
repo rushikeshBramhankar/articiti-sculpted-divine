@@ -29,10 +29,15 @@ export const Route = createFileRoute("/admin/products/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Products — ARTINCITY Admin" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Products — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage all devotional wall sculpture products." },
+
+      { title: "Products — Interior by Veera Admin" },
       { name: "description", content: "Manage all devotional wall sculpture products." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Products — ARTINCITY Admin" },
+      { property: "og:title", content: "Products — Interior by Veera Admin" },
       { property: "og:description", content: "Manage all devotional wall sculpture products." },
     ],
   }),

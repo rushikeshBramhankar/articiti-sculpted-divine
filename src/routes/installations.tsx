@@ -7,13 +7,18 @@ import { installationsQuery } from "@/lib/queries";
 export const Route = createFileRoute("/installations")({
   head: () => ({
     meta: [
-      { title: "Real Installations — Made For Real Homes | ARTINCITY" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Real Installations — Made For Real Homes | Interior by Veera" },
+      { name: "twitter:description", content: "Actual Interior by Veera devotional wall sculpture installations in real Indian homes — location, design, size and material." },
+
+      { title: "Real Installations — Made For Real Homes | Interior by Veera" },
       {
         name: "description",
         content:
-          "Actual ARTINCITY devotional wall sculpture installations in real Indian homes — location, design, size and material.",
+          "Actual Interior by Veera devotional wall sculpture installations in real Indian homes — location, design, size and material.",
       },
-      { property: "og:title", content: "Real Installations — ARTINCITY" },
+      { property: "og:title", content: "Real Installations — Interior by Veera" },
       { property: "og:description", content: "Actual installations in real Indian homes." },
     ],
   }),

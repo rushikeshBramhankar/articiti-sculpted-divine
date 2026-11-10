@@ -8,7 +8,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 export const Route = createFileRoute("/admin/custom-requests/")({
   ssr: false,
-  head: () => ({ meta: [{ title: "Custom Requests — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [
+      { name: "description", content: "Manage custom-requests index with Interior by Veera." },
+      { property: "og:title", content: "Custom Requests — Interior by Veera Admin" },
+      { property: "og:description", content: "Manage custom-requests index with Interior by Veera." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Custom Requests — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage custom-requests index with Interior by Veera." },
+{ title: "Custom Requests — Interior by Veera Admin" }, { name: "robots", content: "noindex" }] }),
   component: CustomRequestsPage,
 });
 

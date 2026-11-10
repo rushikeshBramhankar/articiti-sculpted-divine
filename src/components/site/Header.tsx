@@ -19,11 +19,11 @@ export function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/92 backdrop-blur-md transition-all duration-700">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20 md:px-10">
-        <Link to="/" aria-label="ArtInCity home" className="text-foreground transition-colors">
-          <Logo className="text-xl md:text-2xl" />
+        <Link to="/" aria-label="Interior by Veera home" className="text-foreground transition-colors">
+          <Logo className="text-base md:text-lg xl:text-xl" />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-5 xl:flex">
           {NAV.map((item) => (
             <Link
               key={item.to}
@@ -46,7 +46,7 @@ export function Header() {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
               aria-label="Open menu"
-              className="p-2 text-foreground lg:hidden"
+              className="p-2 text-foreground xl:hidden"
             >
               <Menu className="size-5" />
             </SheetTrigger>

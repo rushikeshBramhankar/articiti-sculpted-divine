@@ -6,10 +6,15 @@ export const Route = createFileRoute("/admin/categories")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Categories — ARTINCITY Admin" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Categories — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage deity collections shown on the website." },
+
+      { title: "Categories — Interior by Veera Admin" },
       { name: "description", content: "Manage deity collections shown on the website." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Categories — ARTINCITY Admin" },
+      { property: "og:title", content: "Categories — Interior by Veera Admin" },
       { property: "og:description", content: "Manage deity collections shown on the website." },
     ],
   }),

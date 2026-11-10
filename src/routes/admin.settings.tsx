@@ -11,7 +11,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 
-export const Route = createFileRoute("/admin/settings")({ ssr: false, head: () => ({ meta: [{ title: "Website Settings — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: SettingsPage });
+export const Route = createFileRoute("/admin/settings")({ ssr: false, head: () => ({ meta: [
+      { name: "description", content: "Manage settings with Interior by Veera." },
+      { property: "og:title", content: "Website Settings — Interior by Veera Admin" },
+      { property: "og:description", content: "Manage settings with Interior by Veera." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Website Settings — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage settings with Interior by Veera." },
+{ title: "Website Settings — Interior by Veera Admin" }, { name: "robots", content: "noindex" }] }), component: SettingsPage });
 
 const SETTING_KEYS = [
   "brand_name",

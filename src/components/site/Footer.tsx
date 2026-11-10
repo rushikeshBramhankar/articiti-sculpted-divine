@@ -14,7 +14,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-5 py-16 md:px-10 md:py-24">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Logo className="text-2xl" />
+            <Logo className="text-lg sm:text-2xl" />
             <p className="font-display mt-4 max-w-xs text-xl leading-snug text-ink-foreground/70">
               {settings?.["footer_text"] ?? "Divinity, Sculpted for Your Space."}
             </p>
@@ -70,7 +70,7 @@ export function Footer() {
                   rel="noreferrer"
                   className="inline-flex items-center gap-2"
                 >
-                  <Instagram className="size-4" /> Instagram
+                  <Instagram className="size-4" /> Instagram @interior_by_veera
                 </a>
               </li>
               <li>
@@ -83,7 +83,7 @@ export function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-sidebar-border pt-8 text-xs text-ink-foreground/50 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} ARTINCITY. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Interior by Veera. All rights reserved.</p>
           <p className="flex gap-6">
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms &amp; Conditions</Link>

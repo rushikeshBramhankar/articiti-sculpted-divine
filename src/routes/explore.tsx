@@ -11,16 +11,21 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/explore")({
   head: () => ({
     meta: [
-      { title: "Explore Designs — ARTINCITY Devotional Wall Sculptures" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Explore Designs — Interior by Veera Devotional Wall Sculptures" },
+      { name: "twitter:description", content: "Browse every Interior by Veera 3D devotional wall sculpture — Krishna, Mahadev, Ganpati and Hanuman designs for modern Indian homes." },
+
+      { title: "Explore Designs — Interior by Veera Devotional Wall Sculptures" },
       {
         name: "description",
         content:
-          "Browse every ARTINCITY 3D devotional wall sculpture — Krishna, Mahadev, Ganpati and Hanuman designs for modern Indian homes.",
+          "Browse every Interior by Veera 3D devotional wall sculpture — Krishna, Mahadev, Ganpati and Hanuman designs for modern Indian homes.",
       },
-      { property: "og:title", content: "Explore Designs — ARTINCITY" },
+      { property: "og:title", content: "Explore Designs — Interior by Veera" },
       {
         property: "og:description",
-        content: "Browse every ARTINCITY 3D devotional wall sculpture design.",
+        content: "Browse every Interior by Veera 3D devotional wall sculpture design.",
       },
     ],
   }),

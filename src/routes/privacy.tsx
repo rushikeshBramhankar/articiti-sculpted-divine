@@ -4,13 +4,18 @@ import { SiteShell } from "@/components/site/SiteShell";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — ARTINCITY" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Privacy Policy — Interior by Veera" },
+      { name: "twitter:description", content: "How Interior by Veera collects and uses the information you share through enquiries." },
+
+      { title: "Privacy Policy — Interior by Veera" },
       {
         name: "description",
-        content: "How ARTINCITY collects and uses the information you share through enquiries.",
+        content: "How Interior by Veera collects and uses the information you share through enquiries.",
       },
-      { property: "og:title", content: "Privacy Policy — ARTINCITY" },
-      { property: "og:description", content: "How ARTINCITY handles your information." },
+      { property: "og:title", content: "Privacy Policy — Interior by Veera" },
+      { property: "og:description", content: "How Interior by Veera handles your information." },
     ],
   }),
   component: () => (

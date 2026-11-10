@@ -7,13 +7,18 @@ import { whatsappHref } from "@/components/site/brand";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact ARTINCITY — Let's Create Something Extraordinary" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Contact Interior by Veera — Let's Create Something Extraordinary" },
+      { name: "twitter:description", content: "Talk to Interior by Veera on WhatsApp or Instagram about custom devotional wall sculptures, sizes, materials and quotations." },
+
+      { title: "Contact Interior by Veera — Let's Create Something Extraordinary" },
       {
         name: "description",
         content:
-          "Talk to ARTINCITY on WhatsApp or Instagram about custom devotional wall sculptures, sizes, materials and quotations.",
+          "Talk to Interior by Veera on WhatsApp or Instagram about custom devotional wall sculptures, sizes, materials and quotations.",
       },
-      { property: "og:title", content: "Contact ARTINCITY" },
+      { property: "og:title", content: "Contact Interior by Veera" },
       { property: "og:description", content: "Let's create something extraordinary." },
     ],
   }),
@@ -53,7 +58,7 @@ function ContactPage() {
             rel="noreferrer"
             className="border border-foreground/25 px-6 py-5 text-center text-[0.66rem] tracking-[0.2em] uppercase"
           >
-            Follow on Instagram
+            Instagram @interior_by_veera
           </a>
           <Link
             to="/quote"

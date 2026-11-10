@@ -32,7 +32,7 @@ export const notifyNewEnquiry = createServerFn({ method: "POST" })
       ["Message", data.message],
     ];
 
-    const html = `<h2>New ARTINCITY enquiry</h2><table>${rows
+    const html = `<h2>New Interior by Veera enquiry</h2><table>${rows
       .filter(([, v]) => v)
       .map(([k, v]) => `<tr><td><b>${k}</b></td><td>${v}</td></tr>`)
       .join("")}</table><p><a href="${data.adminUrl}">Open in admin dashboard</a></p>`;
@@ -45,7 +45,7 @@ export const notifyNewEnquiry = createServerFn({ method: "POST" })
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "ARTINCITY <onboarding@resend.dev>",
+          from: "Interior by Veera <onboarding@resend.dev>",
           to: ["rushikeshbramhankar.dev@gmail.com"],
           subject: `New enquiry — ${data.fullName}`,
           html,
@@ -91,7 +91,7 @@ export const notifyCustomRequest = createServerFn({ method: "POST" })
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          from: "ARTINCITY <onboarding@resend.dev>",
+          from: "Interior by Veera <onboarding@resend.dev>",
           to: ["rushikeshbramhankar.dev@gmail.com"],
           subject: `New Custom Design Request — ${data.name}`,
           html,

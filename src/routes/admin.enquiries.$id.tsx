@@ -17,7 +17,15 @@ import {
 } from "@/components/ui/select";
 import { Mail, MessageCircle } from "lucide-react";
 
-export const Route = createFileRoute("/admin/enquiries/$id")({ ssr: false, head: () => ({ meta: [{ title: "Enquiry Detail — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: EnquiryDetailPage });
+export const Route = createFileRoute("/admin/enquiries/$id")({ ssr: false, head: () => ({ meta: [
+      { name: "description", content: "Manage enquiries details with Interior by Veera." },
+      { property: "og:title", content: "Enquiry Detail — Interior by Veera Admin" },
+      { property: "og:description", content: "Manage enquiries details with Interior by Veera." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Enquiry Detail — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage enquiries details with Interior by Veera." },
+{ title: "Enquiry Detail — Interior by Veera Admin" }, { name: "robots", content: "noindex" }] }), component: EnquiryDetailPage });
 
 interface EnquiryDetail {
   id: string;
@@ -228,7 +236,7 @@ function EnquiryDetailPage() {
 
           <Card className="p-5 space-y-3">
             <a
-              href={`mailto:${enquiry.email}?subject=Your ARTINCITY Enquiry&body=Hi ${enquiry.full_name},%0A%0AThank you for your enquiry regarding ${enquiry.product?.name || "our products"}.%0A%0ABest regards,%0AARTINCITY%0A`}
+              href={`mailto:${enquiry.email}?subject=Your Interior by Veera Enquiry&body=Hi ${enquiry.full_name},%0A%0AThank you for your enquiry regarding ${enquiry.product?.name || "our products"}.%0A%0ABest regards,%0AInterior by Veera%0A`}
               className="block"
             >
               <Button variant="outline" className="w-full" size="sm">

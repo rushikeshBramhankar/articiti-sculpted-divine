@@ -12,7 +12,15 @@ import { CUSTOM_STATUSES, type CustomRequest } from "./admin.custom-requests.ind
 
 export const Route = createFileRoute("/admin/custom-requests/$id")({
   ssr: false,
-  head: () => ({ meta: [{ title: "Custom Request — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [
+      { name: "description", content: "Manage custom-requests details with Interior by Veera." },
+      { property: "og:title", content: "Custom Request — Interior by Veera Admin" },
+      { property: "og:description", content: "Manage custom-requests details with Interior by Veera." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Custom Request — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage custom-requests details with Interior by Veera." },
+{ title: "Custom Request — Interior by Veera Admin" }, { name: "robots", content: "noindex" }] }),
   component: CustomRequestDetail,
 });
 
@@ -63,7 +71,7 @@ function CustomRequestDetail() {
             <p><b>Size:</b> {r.height_ft && r.width_ft ? `${r.height_ft} ft x ${r.width_ft} ft` : r.height_ft || r.width_ft ? `${r.height_ft ?? "?"} ft x ${r.width_ft ?? "?"} ft` : "Not provided"}</p>
             <p><b>Received:</b> {formatDate(r.created_at)}</p>
             <Button asChild variant="outline" size="sm" className="mt-2">
-              <a href={whatsappHref(r.phone, `Hi ${r.name}, thank you for your custom design request with ArtInCity.`)} target="_blank" rel="noreferrer">
+              <a href={whatsappHref(r.phone, `Hi ${r.name}, thank you for your custom design request with Interior by Veera.`)} target="_blank" rel="noreferrer">
                 <MessageCircle className="mr-2 size-4" /> WhatsApp customer
               </a>
             </Button>

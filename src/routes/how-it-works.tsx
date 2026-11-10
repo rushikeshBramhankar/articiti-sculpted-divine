@@ -5,13 +5,18 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/how-it-works")({
   head: () => ({
     meta: [
-      { title: "How It Works — From Vision to Installation | ARTINCITY" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "How It Works — From Vision to Installation | Interior by Veera" },
+      { name: "twitter:description", content: "Six steps from choosing a devotional wall design to installation in your home — visualize, size, material, finish, quotation, installation." },
+
+      { title: "How It Works — From Vision to Installation | Interior by Veera" },
       {
         name: "description",
         content:
           "Six steps from choosing a devotional wall design to installation in your home — visualize, size, material, finish, quotation, installation.",
       },
-      { property: "og:title", content: "How It Works — ARTINCITY" },
+      { property: "og:title", content: "How It Works — Interior by Veera" },
       {
         property: "og:description",
         content: "From vision to installation in six considered steps.",

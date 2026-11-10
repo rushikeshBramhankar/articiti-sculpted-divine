@@ -19,7 +19,15 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useRef } from "react";
 
-export const Route = createFileRoute("/admin/media")({ ssr: false, head: () => ({ meta: [{ title: "Media — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: MediaPage });
+export const Route = createFileRoute("/admin/media")({ ssr: false, head: () => ({ meta: [
+      { name: "description", content: "Manage media with Interior by Veera." },
+      { property: "og:title", content: "Media — Interior by Veera Admin" },
+      { property: "og:description", content: "Manage media with Interior by Veera." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Media — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage media with Interior by Veera." },
+{ title: "Media — Interior by Veera Admin" }, { name: "robots", content: "noindex" }] }), component: MediaPage });
 
 interface MediaItem {
   id: string;
