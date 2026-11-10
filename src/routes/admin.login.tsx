@@ -11,11 +11,16 @@ export const Route = createFileRoute("/admin/login")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Admin Login — ARTINCITY" },
-      { name: "description", content: "Secure sign-in for the ARTINCITY team." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Admin Login — Interior by Veera" },
+      { name: "twitter:description", content: "Secure sign-in for the Interior by Veera team." },
+
+      { title: "Admin Login — Interior by Veera" },
+      { name: "description", content: "Secure sign-in for the Interior by Veera team." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Admin Login — ARTINCITY" },
-      { property: "og:description", content: "Secure sign-in for the ARTINCITY team." },
+      { property: "og:title", content: "Admin Login — Interior by Veera" },
+      { property: "og:description", content: "Secure sign-in for the Interior by Veera team." },
     ],
   }),
   component: AdminLogin,
@@ -64,8 +69,8 @@ function AdminLogin() {
         className="bg-background text-foreground w-full max-w-sm space-y-6 rounded-lg p-8 shadow-xl"
       >
         <div className="text-center">
-          <Logo className="text-2xl" />
-          <h1 className="font-display mt-3 text-xl">Welcome to ArtInCity Admin</h1>
+          <Logo className="text-base sm:text-xl" />
+          <h1 className="font-display mt-3 text-xl">Welcome to Interior by Veera Admin</h1>
         </div>
 
         <div className="space-y-2">

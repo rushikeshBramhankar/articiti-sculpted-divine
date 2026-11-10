@@ -5,13 +5,18 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About ARTINCITY — Indian Devotion Meets Contemporary Design" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "About Interior by Veera — Indian Devotion Meets Contemporary Design" },
+      { name: "twitter:description", content: "Interior by Veera creates custom devotional wall art inspired by India's spiritual and artistic traditions, reinterpreted for contemporary interiors." },
+
+      { title: "About Interior by Veera — Indian Devotion Meets Contemporary Design" },
       {
         name: "description",
         content:
-          "ARTINCITY creates custom devotional wall art inspired by India's spiritual and artistic traditions, reinterpreted for contemporary interiors.",
+          "Interior by Veera creates custom devotional wall art inspired by India's spiritual and artistic traditions, reinterpreted for contemporary interiors.",
       },
-      { property: "og:title", content: "About ARTINCITY" },
+      { property: "og:title", content: "About Interior by Veera" },
       {
         property: "og:description",
         content: "Where Indian devotion meets contemporary design.",
@@ -40,7 +45,7 @@ function AboutPage() {
           Where Indian Devotion Meets Contemporary Design.
         </h1>
         <p className="mt-8 max-w-xl text-muted-foreground">
-          ArtInCity creates custom devotional wall art inspired by India's timeless spiritual and
+          Interior by Veera creates custom devotional wall art inspired by India's timeless spiritual and
           artistic traditions, reinterpreted for contemporary interiors.
         </p>
       </section>

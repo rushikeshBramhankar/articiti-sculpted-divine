@@ -8,13 +8,18 @@ import { categoriesQuery } from "@/lib/queries";
 export const Route = createFileRoute("/collections/")({
   head: () => ({
     meta: [
-      { title: "Collections — Krishna, Mahadev, Ganpati & Hanuman Wall Art | ARTINCITY" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Collections — Krishna, Mahadev, Ganpati & Hanuman Wall Art | Interior by Veera" },
+      { name: "twitter:description", content: "Explore Interior by Veera collections of devotional wall sculptures by deity — Shri Krishna, Mahadev, Ganpati Bappa and Bajrang Bali." },
+
+      { title: "Collections — Krishna, Mahadev, Ganpati & Hanuman Wall Art | Interior by Veera" },
       {
         name: "description",
         content:
-          "Explore ARTINCITY collections of devotional wall sculptures by deity — Shri Krishna, Mahadev, Ganpati Bappa and Bajrang Bali.",
+          "Explore Interior by Veera collections of devotional wall sculptures by deity — Shri Krishna, Mahadev, Ganpati Bappa and Bajrang Bali.",
       },
-      { property: "og:title", content: "Collections — ARTINCITY" },
+      { property: "og:title", content: "Collections — Interior by Veera" },
       {
         property: "og:description",
         content: "Devotional wall sculpture collections by deity.",

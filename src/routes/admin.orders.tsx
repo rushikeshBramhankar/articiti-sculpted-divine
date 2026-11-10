@@ -8,10 +8,15 @@ export const Route = createFileRoute("/admin/orders")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Orders — ARTINCITY Admin" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Orders — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Track orders from enquiry to installation." },
+
+      { title: "Orders — Interior by Veera Admin" },
       { name: "description", content: "Track orders from enquiry to installation." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Orders — ARTINCITY Admin" },
+      { property: "og:title", content: "Orders — Interior by Veera Admin" },
       { property: "og:description", content: "Track orders from enquiry to installation." },
     ],
   }),

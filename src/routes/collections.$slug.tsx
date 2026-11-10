@@ -9,18 +9,23 @@ import { categoryQuery, productsQuery } from "@/lib/queries";
 export const Route = createFileRoute("/collections/$slug")({
   head: ({ params }) => {
     const name = params.slug.replace(/-/g, " ");
-    const title = `${name} Collection — ARTINCITY Devotional Wall Sculptures`;
+    const title = `${name} Collection — Interior by Veera Devotional Wall Sculptures`;
     return {
       meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: `Explore Interior by Veera ${name },
+
         { title },
         {
           name: "description",
-          content: `Explore ARTINCITY ${name} 3D wall sculptures — timeless devotion interpreted through contemporary architectural art.`,
+          content: `Explore Interior by Veera ${name} 3D wall sculptures — timeless devotion interpreted through contemporary architectural art.`,
         },
         { property: "og:title", content: title },
         {
           property: "og:description",
-          content: `Explore ARTINCITY ${name} devotional wall sculptures.`,
+          content: `Explore Interior by Veera ${name} devotional wall sculptures.`,
         },
       ],
     };

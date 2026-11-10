@@ -4,12 +4,17 @@ import { SiteShell } from "@/components/site/SiteShell";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms & Conditions — ARTINCITY" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Terms & Conditions — Interior by Veera" },
+      { name: "twitter:description", content: "Terms covering estimates, quotations, custom manufacturing and installation." },
+
+      { title: "Terms & Conditions — Interior by Veera" },
       {
         name: "description",
         content: "Terms covering estimates, quotations, custom manufacturing and installation.",
       },
-      { property: "og:title", content: "Terms & Conditions — ARTINCITY" },
+      { property: "og:title", content: "Terms & Conditions — Interior by Veera" },
       { property: "og:description", content: "Terms for estimates, orders and installation." },
     ],
   }),

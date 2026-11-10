@@ -7,10 +7,15 @@ export const Route = createFileRoute("/admin/materials")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Materials — ARTINCITY Admin" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Materials — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage materials and their base rates." },
+
+      { title: "Materials — Interior by Veera Admin" },
       { name: "description", content: "Manage materials and their base rates." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Materials — ARTINCITY Admin" },
+      { property: "og:title", content: "Materials — Interior by Veera Admin" },
       { property: "og:description", content: "Manage materials and their base rates." },
     ],
   }),

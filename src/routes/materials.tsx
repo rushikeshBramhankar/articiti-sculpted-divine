@@ -8,13 +8,18 @@ import { formatINR } from "@/lib/pricing";
 export const Route = createFileRoute("/materials")({
   head: () => ({
     meta: [
-      { title: "Materials — Choose What Works For Your Space | ARTINCITY" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Materials — Choose What Works For Your Space | Interior by Veera" },
+      { name: "twitter:description", content: "HDHMR, Gypsum/POP, MDF and fibre options for custom devotional wall sculptures — with guidance on what suits your design and space." },
+
+      { title: "Materials — Choose What Works For Your Space | Interior by Veera" },
       {
         name: "description",
         content:
           "HDHMR, Gypsum/POP, MDF and fibre options for custom devotional wall sculptures — with guidance on what suits your design and space.",
       },
-      { property: "og:title", content: "Materials — ARTINCITY" },
+      { property: "og:title", content: "Materials — Interior by Veera" },
       {
         property: "og:description",
         content: "Material options for custom devotional wall sculptures.",

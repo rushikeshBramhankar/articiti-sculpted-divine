@@ -30,10 +30,15 @@ export const Route = createFileRoute("/admin/pricing")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Pricing — ARTINCITY Admin" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Pricing — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Thickness rates, MRP markup and product sizes." },
+
+      { title: "Pricing — Interior by Veera Admin" },
       { name: "description", content: "Thickness rates, MRP markup and product sizes." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Pricing — ARTINCITY Admin" },
+      { property: "og:title", content: "Pricing — Interior by Veera Admin" },
       { property: "og:description", content: "Thickness rates, MRP markup and product sizes." },
     ],
   }),

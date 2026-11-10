@@ -14,12 +14,15 @@ import { notifyCustomRequest } from "@/lib/notify.functions";
 export const Route = createFileRoute("/want-customization")({
   head: () => ({
     meta: [
-      { title: "Want Customization? — ARTINCITY Custom 3D Wall Murals" },
+      { name: "twitter:title", content: "Want Customization? — Interior by Veera Custom 3D Wall Murals" },
+      { name: "twitter:description", content: "Upload any design and Interior by Veera will recreate it as a handcrafted 3D wall mural for your home." },
+
+      { title: "Want Customization? — Interior by Veera Custom 3D Wall Murals" },
       {
         name: "description",
-        content: "Upload any design and ARTINCITY will recreate it as a handcrafted 3D wall mural for your home.",
+        content: "Upload any design and Interior by Veera will recreate it as a handcrafted 3D wall mural for your home.",
       },
-      { property: "og:title", content: "Want Customization? — ARTINCITY" },
+      { property: "og:title", content: "Want Customization? — Interior by Veera" },
       { property: "og:description", content: "Upload a design you'd like us to recreate as a 3D wall mural." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -92,7 +95,7 @@ function WantCustomizationPage() {
   }
 
   const waMessage = [
-    "Hi ArtInCity, I've sent a New Custom Design Request.",
+    "Hi Interior by Veera, I've sent a New Custom Design Request.",
     `Name: ${form.name}`,
     `Phone: ${form.phone}`,
     form.height && form.width ? `Size: ${form.height} ft x ${form.width} ft` : null,

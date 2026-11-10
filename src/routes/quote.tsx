@@ -23,13 +23,16 @@ export const Route = createFileRoute("/quote")({
   },
   head: () => ({
     meta: [
-      { title: "Want Customization — ARTINCITY Custom Devotional Wall Art" },
+      { name: "twitter:title", content: "Want Customization — Interior by Veera Custom Devotional Wall Art" },
+      { name: "twitter:description", content: "Choose your design, size and thickness and get the final price for your custom Interior by Veera wall sculpture." },
+
+      { title: "Want Customization — Interior by Veera Custom Devotional Wall Art" },
       {
         name: "description",
         content:
-          "Choose your design, size and thickness and get the final price for your custom ARTINCITY wall sculpture.",
+          "Choose your design, size and thickness and get the final price for your custom Interior by Veera wall sculpture.",
       },
-      { property: "og:title", content: "Want Customization — ARTINCITY" },
+      { property: "og:title", content: "Want Customization — Interior by Veera" },
       {
         property: "og:description",
         content: "Choose your design and thickness and get the final price instantly.",

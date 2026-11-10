@@ -10,13 +10,18 @@ import { productsQuery } from "@/lib/queries";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ARTINCITY — Divinity, Sculpted for Your Space" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Interior by Veera — Divinity, Sculpted for Your Space" },
+      { name: "twitter:description", content: "Custom 3D devotional wall art and sculptural reliefs designed for modern Indian homes. Krishna, Mahadev, Ganpati and Hanuman wall installations." },
+
+      { title: "Interior by Veera — Divinity, Sculpted for Your Space" },
       {
         name: "description",
         content:
           "Custom 3D devotional wall art and sculptural reliefs designed for modern Indian homes. Krishna, Mahadev, Ganpati and Hanuman wall installations.",
       },
-      { property: "og:title", content: "ARTINCITY — Divinity, Sculpted for Your Space" },
+      { property: "og:title", content: "Interior by Veera — Divinity, Sculpted for Your Space" },
       {
         property: "og:description",
         content: "Custom 3D devotional wall art designed to transform modern Indian homes.",

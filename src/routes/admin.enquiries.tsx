@@ -23,7 +23,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export const Route = createFileRoute("/admin/enquiries")({ ssr: false, head: () => ({ meta: [{ title: "Enquiries — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: EnquiriesPage });
+export const Route = createFileRoute("/admin/enquiries")({ ssr: false, head: () => ({ meta: [
+      { name: "description", content: "Manage enquiries with Interior by Veera." },
+      { property: "og:title", content: "Enquiries — Interior by Veera Admin" },
+      { property: "og:description", content: "Manage enquiries with Interior by Veera." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Enquiries — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage enquiries with Interior by Veera." },
+{ title: "Enquiries — Interior by Veera Admin" }, { name: "robots", content: "noindex" }] }), component: EnquiriesPage });
 
 interface Enquiry {
   id: string;

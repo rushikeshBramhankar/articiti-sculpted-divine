@@ -15,13 +15,18 @@ import { enquiryMessage, whatsappHref } from "@/components/site/brand";
 export const Route = createFileRoute("/products/$slug")({
   head: ({ params }) => {
     const name = params.slug.replace(/-/g, " ");
-    const title = `${name} — Custom 3D Devotional Wall Sculpture | ARTINCITY`;
+    const title = `${name} — Custom 3D Devotional Wall Sculpture | Interior by Veera`;
     return {
       meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: `${name },
+
         { title },
         {
           name: "description",
-          content: `${name}: a contemporary 3D devotional wall sculpture by ARTINCITY, made to order.`,
+          content: `${name}: a contemporary 3D devotional wall sculpture by Interior by Veera, made to order.`,
         },
         { property: "og:title", content: title },
         {

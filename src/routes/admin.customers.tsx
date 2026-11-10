@@ -21,7 +21,15 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-export const Route = createFileRoute("/admin/customers")({ ssr: false, head: () => ({ meta: [{ title: "Customers — ARTINCITY Admin" }, { name: "robots", content: "noindex" }] }), component: CustomersPage });
+export const Route = createFileRoute("/admin/customers")({ ssr: false, head: () => ({ meta: [
+      { name: "description", content: "Manage customers with Interior by Veera." },
+      { property: "og:title", content: "Customers — Interior by Veera Admin" },
+      { property: "og:description", content: "Manage customers with Interior by Veera." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Customers — Interior by Veera Admin" },
+      { name: "twitter:description", content: "Manage customers with Interior by Veera." },
+{ title: "Customers — Interior by Veera Admin" }, { name: "robots", content: "noindex" }] }), component: CustomersPage });
 
 interface CustomerWithStats {
   id: string;

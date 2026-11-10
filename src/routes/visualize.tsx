@@ -13,16 +13,21 @@ export const Route = createFileRoute("/visualize")({
   }),
   head: () => ({
     meta: [
-      { title: "Visualize Your Wall — ARTINCITY" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Visualize Your Wall — Interior by Veera" },
+      { name: "twitter:description", content: "Upload a photo of your wall and preview how an Interior by Veera devotional wall sculpture will look in your home." },
+
+      { title: "Visualize Your Wall — Interior by Veera" },
       {
         name: "description",
         content:
-          "Upload a photo of your wall and preview how an ARTINCITY devotional wall sculpture will look in your home.",
+          "Upload a photo of your wall and preview how an Interior by Veera devotional wall sculpture will look in your home.",
       },
-      { property: "og:title", content: "Visualize Your Wall — ARTINCITY" },
+      { property: "og:title", content: "Visualize Your Wall — Interior by Veera" },
       {
         property: "og:description",
-        content: "See an ARTINCITY wall sculpture on your own wall before you order.",
+        content: "See an Interior by Veera wall sculpture on your own wall before you order.",
       },
     ],
   }),
